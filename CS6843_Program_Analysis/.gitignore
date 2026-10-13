@@ -1,0 +1,4 @@
+# Local-only build output and course tooling
+build/
+Assignment_1_Introduction_To_LLVM/docker-*.tgz
+Assignment_1_Introduction_To_LLVM/llvm20-x86.tar
