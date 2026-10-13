@@ -30,7 +30,7 @@ void Cache::handleProcRequest(ProcRequest request, unsigned long long address) {
             CacheBlock evicted_block = insertCacheBlock(blockAddress, newState);
             if (evicted_block.state == CacheBlockState::Modified) {
 
-                bus->sendMessage(BusRequest::Flush, evicted_block.tag, id);
+                bus->sendMessage(BusRequest::Flush, (evicted_block.tag << SET_BITS) | (blockAddress & ((1 << SET_BITS) - 1)), id);
                 num_writebacks++;
             }
 
@@ -52,8 +52,7 @@ void Cache::handleProcRequest(ProcRequest request, unsigned long long address) {
             CacheBlock evicted_block = insertCacheBlock(blockAddress, CacheBlockState::Modified);
             if (evicted_block.state == CacheBlockState::Modified) {
 
-                //bus->sendMessage(BusRequest::Flush, evicted_block.tag, id);
-                bus->sendMessage(BusRequest::Flush, evicted_block.tag<<SET_BITS||(blockAddress&&(SET_BITS)-1), id);
+                bus->sendMessage(BusRequest::Flush, (evicted_block.tag << SET_BITS) | (blockAddress & ((1 << SET_BITS) - 1)), id);
                 num_writebacks++;
             }
             
@@ -108,26 +107,15 @@ void Cache::handleBusRequest(BusRequest request, unsigned long long blockAddress
                                     setState(blockAddress, CacheBlockState::Invalid);
                                     num_invalidations++;
 
+                                    // Only a dirty block is flushed. Exclusive and Shared blocks are clean,
+                                    // so they are simply invalidated (no Flush, no writeback).
                                     if (currentState == CacheBlockState::Modified) {
 
                                         bus->sendMessage(BusRequest::Flush, blockAddress, id);
                                         num_writebacks++;
-
-                                    } else if(protocol == Protocol::MESI && currentState == CacheBlockState::Exclusive){
-
-                                            //bus->sendMessage(BusRequest::Flush, blockAddress, id);
-                                            //num_writebacks++;
-
-                                    } else if(protocol == Protocol::MESI && currentState == CacheBlockState::Shared){
-
-                                            // No flush needed for Shared in MESI
-                                    } else if(protocol == Protocol::MSI && currentState == CacheBlockState::Shared){
-
-                                            // No flush needed for Shared in MSI
                                     }
-
                                 }
-                                
+
                                 break;
 
         default:

@@ -1,0 +1,6 @@
+# Local-only build output and course tooling
+*.o
+sim
+simulator
+.vscode/
+Assignment_3_big.LITTLE_Scheduler/assignment.zip
