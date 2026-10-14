@@ -1,0 +1,16 @@
+15 15
+11 4 907 traffic
+4 8 534 traffic
+11 3 90 dept
+3 10 840 normal
+8 6 533 traffic
+4 0 296 green
+10 14 95 green
+4 12 302 dept
+8 9 551 dept
+0 2 727 traffic
+0 1 628 dept
+1 7 441 traffic
+14 5 197 traffic
+5 13 736 traffic
+12 3 702 traffic
