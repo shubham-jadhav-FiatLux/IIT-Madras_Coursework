@@ -1,0 +1,51 @@
+# Deep CSG nesting test (>8 levels) — verifies dynamic pool growth (B4 fix).
+# Each csg block is one level of nesting; this scene exercises ~12 deep.
+image 256 256
+camera pos 0 1 4 lookat 0 0 0 up 0 1 0 vfov 35
+background 0.4 0.4 0.5
+ambient    0.05 0.05 0.05
+max_depth  6
+
+material red albedo 0.8 0.2 0.2 specular 1 1 1 shininess 60
+
+light point pos -3 5 3 intensity 1 1 1
+
+plane point 0 -0.5 0 normal 0 1 0 material red
+
+# 12-level nested CSG: ((((((((((((sphere ∪ box) ∪ box) ∪ box) ∪ box) ∪ box)
+# ∪ box) ∪ box) ∪ box) ∪ box) ∪ box) ∪ box).
+# Each operand is small so the whole result is roughly one sphere visually.
+csg union material red {
+  csg union {
+    csg union {
+      csg union {
+        csg union {
+          csg union {
+            csg union {
+              csg union {
+                csg union {
+                  csg union {
+                    csg union {
+                      sphere center 0 0.5 0 radius 0.4
+                      box min -0.05 0.05 -0.05 max 0.05 0.15 0.05
+                    }
+                    box min -0.05 0.15 -0.05 max 0.05 0.25 0.05
+                  }
+                  box min -0.05 0.25 -0.05 max 0.05 0.35 0.05
+                }
+                box min -0.05 0.35 -0.05 max 0.05 0.45 0.05
+              }
+              box min -0.05 0.45 -0.05 max 0.05 0.55 0.05
+            }
+            box min -0.05 0.55 -0.05 max 0.05 0.65 0.05
+          }
+          box min -0.05 0.65 -0.05 max 0.05 0.75 0.05
+        }
+        box min -0.05 0.75 -0.05 max 0.05 0.85 0.05
+      }
+      box min -0.05 0.85 -0.05 max 0.05 0.95 0.05
+    }
+    box min -0.05 0.95 -0.05 max 0.05 1.05 0.05
+  }
+  box min -0.05 1.05 -0.05 max 0.05 1.15 0.05
+}

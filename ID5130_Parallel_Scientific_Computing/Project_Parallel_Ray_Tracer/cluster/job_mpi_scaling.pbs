@@ -1,0 +1,151 @@
+#!/bin/bash
+#PBS -N rt_mpi_scaling
+#PBS -q medium
+#PBS -l select=4:ncpus=40:mpiprocs=2:ompthreads=20
+#PBS -l walltime=04:00:00
+#PBS -l place=excl
+#PBS -j oe
+#PBS -o rt_mpi_scaling.log
+# place=excl: exclusive nodes — required for clean scaling measurements.
+# 4 nodes × 40 physical cores each = 160 cores total
+# select declaration: 2 MPI ranks per node × 20 OMP threads (NUMA-optimal default)
+# Actual rank/thread splits are overridden at runtime for each benchmark config.
+
+# -----------------------------------------------------------------------
+# Multi-node hybrid MPI+OMP strong-scaling benchmark
+# Nodes: 4 × Xeon Gold 6248 (40 physical cores = 2 sockets × 20 cores)
+#
+# Tests:
+#   Pure MPI  : 1 thread/rank, scale ranks 1→160
+#   NUMA-opt  : 2 ranks/node × 20t (1 rank per socket)  ← best expected config
+#   More MPI  : 4r×10t, 8r×5t, 40r×1t per node
+#   Adaptive vs Standard at NUMA-optimal split
+# -----------------------------------------------------------------------
+
+set -e
+cd "$PBS_O_WORKDIR"
+
+RT_MPI=./build/release/rt_mpi
+RT_OMP=./build/release/rt
+mkdir -p output
+
+sed 's/^spp 1024/spp 256/' scenes/cornell_box.scene > /tmp/cornell_256.scene
+
+# PBS Pro: $PBS_NODEFILE lists one entry per mpiproc per node (not one per node).
+# Use sort -u to get unique node count.
+NODES=$(sort -u "$PBS_NODEFILE" | wc -l)
+echo "=== MPI SCALING BENCHMARK ==="
+echo "Nodes allocated: $NODES"
+echo "Node list: $(sort -u "$PBS_NODEFILE" | tr '\n' ' ')"
+echo "Date: $(date)"
+echo ""
+
+# Intel MPI settings for hybrid correctness
+export I_MPI_PIN=1
+export I_MPI_PIN_DOMAIN=omp
+export OMP_PLACES=cores
+export OMP_PROC_BIND=close
+
+# -----------------------------------------------------------------------
+# 1. CORRECTNESS
+# -----------------------------------------------------------------------
+echo "=== CORRECTNESS ==="
+OMP_NUM_THREADS=1 $RT_OMP scenes/whitted_showcase.scene output/aqua_serial_ref.ppm 2>/dev/null
+HREF=$(md5sum output/aqua_serial_ref.ppm | awk '{print $1}')
+echo "Serial ref (t=1): $HREF"
+
+for NP in 1 2 4 8; do
+    OMP_NUM_THREADS=1 mpirun -np $NP -ppn $NP \
+        $RT_MPI scenes/whitted_showcase.scene /tmp/aqua_mpi_np${NP}.ppm 2>/dev/null
+    H=$(md5sum /tmp/aqua_mpi_np${NP}.ppm | awk '{print $1}')
+    [ "$H" = "$HREF" ] && echo "Whitted np=$NP: OK ($H)" || echo "Whitted np=$NP: MISMATCH ($H vs $HREF)"
+done
+
+OMP_NUM_THREADS=1 $RT_OMP /tmp/cornell_256.scene output/aqua_pt_serial_ref.ppm 2>/dev/null
+PTREF=$(md5sum output/aqua_pt_serial_ref.ppm | awk '{print $1}')
+echo "PT serial ref (t=1): $PTREF"
+for NP in 1 2 4; do
+    OMP_NUM_THREADS=1 mpirun -np $NP -ppn $NP \
+        $RT_MPI /tmp/cornell_256.scene /tmp/aqua_pt_np${NP}.ppm 2>/dev/null
+    H=$(md5sum /tmp/aqua_pt_np${NP}.ppm | awk '{print $1}')
+    [ "$H" = "$PTREF" ] && echo "PT np=$NP: OK ($H)" || echo "PT np=$NP: MISMATCH ($H vs $PTREF)"
+done
+
+# -----------------------------------------------------------------------
+# 2. Whitted — pure MPI scaling (1 thread/rank)
+# -----------------------------------------------------------------------
+echo ""
+echo "=== WHITTED PURE MPI (1t/rank) ==="
+for NP in 1 2 4 8 16 32 $(( NODES * 40 )); do
+    PPN=$(( NP < NODES ? 1 : NP / NODES ))
+    for R in 1 2 3; do
+        OUT=$(OMP_NUM_THREADS=1 mpirun -np $NP -ppn $PPN \
+                $RT_MPI scenes/whitted_showcase.scene /dev/null 2>&1)
+        MS=$(echo "$OUT" | awk '/render/{for(i=1;i<=NF;i++) if($i=="render") print $(i+1)}')
+        echo "WHITTED_PURE_MPI NP=$NP T=1 TOTAL=$NP R=$R ms=$MS"
+    done
+done
+
+# -----------------------------------------------------------------------
+# 3. Path Trace 256 SPP — hybrid scaling (fix total=NODES×40, vary split)
+# -----------------------------------------------------------------------
+echo ""
+echo "=== PATH TRACE 256 SPP — HYBRID SCALING ==="
+CORES_PER_NODE=40
+echo "Nodes=$NODES  Cores/node=$CORES_PER_NODE  Total=$(( NODES * CORES_PER_NODE ))"
+
+# Each row: NP MPI ranks spread evenly across NODES nodes.
+# OMP threads per rank = CORES_PER_NODE / (NP/NODES) = CORES_PER_NODE * NODES / NP
+# but capped at CORES_PER_NODE (a rank only sees its own node's cores).
+# We only test NP >= NODES so every rank lands on exactly one node.
+for NP in $(( NODES * 1 )) $(( NODES * 2 )) $(( NODES * 4 )) $(( NODES * 10 )) $(( NODES * 20 )) $(( NODES * 40 )); do
+    PPN=$(( NP / NODES ))               # ranks per node
+    OT=$(( CORES_PER_NODE / PPN ))      # OMP threads per rank (fits within 1 node)
+    [ $OT -lt 1 ] && continue
+    TOTAL=$(( NP * OT ))
+    for R in 1 2 3; do
+        OUT=$(OMP_NUM_THREADS=$OT mpirun -np $NP -ppn $PPN \
+                $RT_MPI /tmp/cornell_256.scene /dev/null 2>&1)
+        MS=$(echo "$OUT" | awk '/render/{for(i=1;i<=NF;i++) if($i=="render") print $(i+1)}')
+        SPS=$(awk -v ms="$MS" 'BEGIN{printf "%.3f", 512*512*256/ms/1000}')
+        echo "PT256_HYBRID NP=$NP PPN=$PPN OT=$OT TOTAL=$TOTAL R=$R ms=$MS sps=$SPS"
+    done
+done
+
+# -----------------------------------------------------------------------
+# 4. Adaptive vs Standard — NUMA-optimal split (2 ranks/node × 20t)
+# -----------------------------------------------------------------------
+echo ""
+NP=$(( NODES * 2 ))
+PPN=2
+echo "=== ADAPTIVE vs STANDARD (np=$NP, 2 ranks/node × 20t) ==="
+for R in 1 2 3; do
+    OUT=$(OMP_NUM_THREADS=20 mpirun -np $NP -ppn $PPN \
+            $RT_MPI /tmp/cornell_256.scene /dev/null 2>&1)
+    MS=$(echo "$OUT" | awk '/render/{for(i=1;i<=NF;i++) if($i=="render") print $(i+1)}')
+    echo "STANDARD np=$NP t=20 R=$R ms=$MS"
+done
+for R in 1 2 3; do
+    OUT=$(OMP_NUM_THREADS=20 mpirun -np $NP -ppn $PPN \
+            $RT_MPI /tmp/cornell_256.scene /dev/null --adaptive 2>&1)
+    MS=$(echo "$OUT" | awk '/render/{for(i=1;i<=NF;i++) if($i=="render") print $(i+1)}')
+    echo "ADAPTIVE np=$NP t=20 R=$R ms=$MS"
+done
+
+# -----------------------------------------------------------------------
+# 5. Path Trace 1024 SPP — NUMA-optimal config, saved to file
+# -----------------------------------------------------------------------
+echo ""
+NP=$(( NODES * 2 ))
+echo "=== PATH TRACE 1024 SPP (np=$NP, 2 ranks/node × 20t) ==="
+for R in 1 2; do
+    OUT=$(OMP_NUM_THREADS=20 mpirun -np $NP -ppn 2 \
+            $RT_MPI scenes/cornell_box.scene output/aqua_1024spp_np${NP}.ppm 2>&1)
+    MS=$(echo "$OUT" | awk '/render/{for(i=1;i<=NF;i++) if($i=="render") print $(i+1)}')
+    SPS=$(awk -v ms="$MS" 'BEGIN{printf "%.3f", 512*512*1024/ms/1000}')
+    echo "PT1024_BEST NP=$NP T=20 R=$R ms=$MS sps=$SPS"
+done
+
+echo ""
+echo "=== DONE ==="
+echo "Finished: $(date)"

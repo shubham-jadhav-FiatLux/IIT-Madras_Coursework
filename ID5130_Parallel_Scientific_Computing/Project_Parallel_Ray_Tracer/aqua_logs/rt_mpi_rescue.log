@@ -1,0 +1,32 @@
+[boot] pwd=/lfs/usrhome/ms/cs24s009/rt_paper host=cn186 date=Thu May  7 06:19:15 IST 2026
+[boot] env sourced; DRJIT_LIBLLVM_PATH=/lfs/sware/anaconda3_2023/lib/libLLVM-11.so
+build/release/rt_mpi: ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), dynamically linked (uses shared libs), for GNU/Linux 2.6.32, not stripped
+[boot] rt_mpi smoke OK
+[boot] scratch=/tmp/cs24s009_rtmpi_1746558 (writable)
+[boot] csv=/tmp/cs24s009_rtmpi_1746558/timings.csv
+[boot] log=/tmp/cs24s009_rtmpi_1746558/run.log
+===========================================
+MPI-only rescue (v2) 20260507_061918  on 4 nodes
+Started: Thu May  7 06:19:18 IST 2026
+Scratch: /tmp/cs24s009_rtmpi_1746558
+===========================================
+
+=== TIER 1.4: Pure MPI strong scaling (1 thread/rank) ===
+
+=== TIER 2.3: Hybrid MPI+OMP sweep ===
+
+=== AGGREGATE (still on /tmp) ===
+wrote 18 rows to /tmp/cs24s009_rtmpi_1746558/summary.csv
+
+Copying /tmp/cs24s009_rtmpi_1746558 -> results/20260507_061918_mpirescue ...
+‘/tmp/cs24s009_rtmpi_1746558/./summary.csv’ -> ‘results/20260507_061918_mpirescue/./summary.csv’
+‘/tmp/cs24s009_rtmpi_1746558/./timings.csv’ -> ‘results/20260507_061918_mpirescue/./timings.csv’
+‘/tmp/cs24s009_rtmpi_1746558/./run.log’ -> ‘results/20260507_061918_mpirescue/./run.log’
+Final results: results/20260507_061918_mpirescue
+total 67
+drwxr-xr-x 2 cs24s009 ms 33280 May  7 11:19 .
+drwxr-xr-x 4 cs24s009 ms 33280 May  7 11:19 ..
+-rw-r--r-- 1 cs24s009 ms 17444 May  7 11:19 run.log
+-rw-r--r-- 1 cs24s009 ms  3325 May  7 11:19 summary.csv
+-rw-r--r-- 1 cs24s009 ms 15446 May  7 11:19 timings.csv
+Finished: Thu May  7 11:19:15 IST 2026

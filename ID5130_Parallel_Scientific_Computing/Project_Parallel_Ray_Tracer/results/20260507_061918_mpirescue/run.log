@@ -1,0 +1,193 @@
+===========================================
+MPI-only rescue (v2) 20260507_061918  on 4 nodes
+Started: Thu May  7 06:19:18 IST 2026
+Scratch: /tmp/cs24s009_rtmpi_1746558
+===========================================
+
+=== TIER 1.4: Pure MPI strong scaling (1 thread/rank) ===
+[bench] mpirun -np 1 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r1_run0.ppm
+[bench]   wall=384836 render=384313 exit=0
+[bench] mpirun -np 1 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r1_run1.ppm
+[bench]   wall=383973 render=383456 exit=0
+[bench] mpirun -np 1 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r1_run2.ppm
+[bench]   wall=384314 render=383800 exit=0
+[bench] mpirun -np 1 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r1_run3.ppm
+[bench]   wall=399619 render=399081 exit=0
+[bench] mpirun -np 1 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r1_run4.ppm
+[bench]   wall=385884 render=385346 exit=0
+[bench] mpirun -np 2 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r2_run0.ppm
+[bench]   wall=204073 render=203555 exit=0
+[bench] mpirun -np 2 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r2_run1.ppm
+[bench]   wall=203761 render=203258 exit=0
+[bench] mpirun -np 2 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r2_run2.ppm
+[bench]   wall=204154 render=203634 exit=0
+[bench] mpirun -np 2 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r2_run3.ppm
+[bench]   wall=203871 render=203372 exit=0
+[bench] mpirun -np 2 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r2_run4.ppm
+[bench]   wall=204409 render=203869 exit=0
+[bench] mpirun -np 4 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r4_run0.ppm
+[bench]   wall=225206 render=224543 exit=0
+[bench] mpirun -np 4 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r4_run1.ppm
+[bench]   wall=225151 render=224483 exit=0
+[bench] mpirun -np 4 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r4_run2.ppm
+[bench]   wall=225652 render=224989 exit=0
+[bench] mpirun -np 4 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r4_run3.ppm
+[bench]   wall=224879 render=224211 exit=0
+[bench] mpirun -np 4 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r4_run4.ppm
+[bench]   wall=224686 render=223991 exit=0
+[bench] mpirun -np 8 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r8_run0.ppm
+[bench]   wall=229609 render=228610 exit=0
+[bench] mpirun -np 8 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r8_run1.ppm
+[bench]   wall=229951 render=229026 exit=0
+[bench] mpirun -np 8 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r8_run2.ppm
+[bench]   wall=230734 render=229826 exit=0
+[bench] mpirun -np 8 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r8_run3.ppm
+[bench]   wall=229785 render=228905 exit=0
+[bench] mpirun -np 8 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r8_run4.ppm
+[bench]   wall=229468 render=228545 exit=0
+[bench] mpirun -np 16 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r16_run0.ppm
+[bench]   wall=232558 render=231033 exit=0
+[bench] mpirun -np 16 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r16_run1.ppm
+[bench]   wall=232281 render=230783 exit=0
+[bench] mpirun -np 16 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r16_run2.ppm
+[bench]   wall=232149 render=230682 exit=0
+[bench] mpirun -np 16 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r16_run3.ppm
+[bench]   wall=231863 render=230299 exit=0
+[bench] mpirun -np 16 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r16_run4.ppm
+[bench]   wall=232511 render=230990 exit=0
+[bench] mpirun -np 32 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r32_run0.ppm
+[bench]   wall=235225 render=232371 exit=0
+[bench] mpirun -np 32 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r32_run1.ppm
+[bench]   wall=234983 render=232089 exit=0
+[bench] mpirun -np 32 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r32_run2.ppm
+[bench]   wall=236735 render=233615 exit=0
+[bench] mpirun -np 32 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r32_run3.ppm
+[bench]   wall=236011 render=232876 exit=0
+[bench] mpirun -np 32 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r32_run4.ppm
+[bench]   wall=235036 render=232200 exit=0
+[bench] mpirun -np 64 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r64_run0.ppm
+[bench]   wall=295311 render=290747 exit=0
+[bench] mpirun -np 64 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r64_run1.ppm
+[bench]   wall=295350 render=291509 exit=0
+[bench] mpirun -np 64 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r64_run2.ppm
+[bench]   wall=294248 render=289892 exit=0
+[bench] mpirun -np 64 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r64_run3.ppm
+[bench]   wall=296388 render=292635 exit=0
+[bench] mpirun -np 64 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r64_run4.ppm
+[bench]   wall=293977 render=290211 exit=0
+[bench] mpirun -np 128 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r128_run0.ppm
+[bench]   wall=296496 render=291506 exit=0
+[bench] mpirun -np 128 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r128_run1.ppm
+[bench]   wall=302689 render=297702 exit=0
+[bench] mpirun -np 128 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r128_run2.ppm
+[bench]   wall=296237 render=291274 exit=0
+[bench] mpirun -np 128 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r128_run3.ppm
+[bench]   wall=296556 render=291774 exit=0
+[bench] mpirun -np 128 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r128_run4.ppm
+[bench]   wall=296736 render=292166 exit=0
+[bench] mpirun -np 160 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r160_run0.ppm
+[bench]   wall=306264 render=301356 exit=0
+[bench] mpirun -np 160 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r160_run1.ppm
+[bench]   wall=297421 render=292200 exit=0
+[bench] mpirun -np 160 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r160_run2.ppm
+[bench]   wall=298406 render=292902 exit=0
+[bench] mpirun -np 160 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r160_run3.ppm
+[bench]   wall=295658 render=290757 exit=0
+[bench] mpirun -np 160 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r160_run4.ppm
+[bench]   wall=296937 render=291505 exit=0
+
+=== TIER 2.3: Hybrid MPI+OMP sweep ===
+[bench] mpirun -np 1 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t40_r1_run0.ppm
+[bench]   wall=385845 render=385270 exit=0
+[bench] mpirun -np 1 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t40_r1_run1.ppm
+[bench]   wall=385643 render=384918 exit=0
+[bench] mpirun -np 1 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t40_r1_run2.ppm
+[bench]   wall=385439 render=384847 exit=0
+[bench] mpirun -np 1 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t40_r1_run3.ppm
+[bench]   wall=385402 render=384859 exit=0
+[bench] mpirun -np 1 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t40_r1_run4.ppm
+[bench]   wall=385619 render=385099 exit=0
+[bench] mpirun -np 2 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t20_r2_run0.ppm
+[bench]   wall=204155 render=203633 exit=0
+[bench] mpirun -np 2 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t20_r2_run1.ppm
+[bench]   wall=204280 render=203775 exit=0
+[bench] mpirun -np 2 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t20_r2_run2.ppm
+[bench]   wall=204082 render=203580 exit=0
+[bench] mpirun -np 2 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t20_r2_run3.ppm
+[bench]   wall=204060 render=203549 exit=0
+[bench] mpirun -np 2 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t20_r2_run4.ppm
+[bench]   wall=204104 render=203601 exit=0
+[bench] mpirun -np 4 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t10_r4_run0.ppm
+[bench]   wall=20355 render=19666 exit=0
+[bench] mpirun -np 4 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t10_r4_run1.ppm
+[bench]   wall=20364 render=19687 exit=0
+[bench] mpirun -np 4 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t10_r4_run2.ppm
+[bench]   wall=20453 render=19747 exit=0
+[bench] mpirun -np 4 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t10_r4_run3.ppm
+[bench]   wall=20580 render=19906 exit=0
+[bench] mpirun -np 4 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t10_r4_run4.ppm
+[bench]   wall=20583 render=19930 exit=0
+[bench] mpirun -np 8 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t5_r8_run0.ppm
+[bench]   wall=41887 render=40890 exit=0
+[bench] mpirun -np 8 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t5_r8_run1.ppm
+[bench]   wall=42014 render=40999 exit=0
+[bench] mpirun -np 8 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t5_r8_run2.ppm
+[bench]   wall=40946 render=40001 exit=0
+[bench] mpirun -np 8 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t5_r8_run3.ppm
+[bench]   wall=40955 render=39988 exit=0
+[bench] mpirun -np 8 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t5_r8_run4.ppm
+[bench]   wall=41016 render=40042 exit=0
+[bench] mpirun -np 40 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r40_run0.ppm
+[bench]   wall=295858 render=292205 exit=0
+[bench] mpirun -np 40 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r40_run1.ppm
+[bench]   wall=294535 render=290768 exit=0
+[bench] mpirun -np 40 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r40_run2.ppm
+[bench]   wall=295619 render=292516 exit=0
+[bench] mpirun -np 40 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r40_run3.ppm
+[bench]   wall=293710 render=290560 exit=0
+[bench] mpirun -np 40 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r40_run4.ppm
+[bench]   wall=294728 render=291233 exit=0
+[bench] mpirun --map-by ppr:1:node -np 2 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t40_r2_run0.ppm
+[bench]   wall=204363 render=203577 exit=0
+[bench] mpirun --map-by ppr:1:node -np 2 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t40_r2_run1.ppm
+[bench]   wall=204222 render=203657 exit=0
+[bench] mpirun --map-by ppr:1:node -np 2 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t40_r2_run2.ppm
+[bench]   wall=204313 render=203767 exit=0
+[bench] mpirun --map-by ppr:1:node -np 2 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t40_r2_run3.ppm
+[bench]   wall=204023 render=203474 exit=0
+[bench] mpirun --map-by ppr:1:node -np 2 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t40_r2_run4.ppm
+[bench]   wall=204203 render=203649 exit=0
+[bench] mpirun --map-by ppr:2:node -np 4 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t20_r4_run0.ppm
+[bench]   wall=6364 render=5798 exit=0
+[bench] mpirun --map-by ppr:2:node -np 4 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t20_r4_run1.ppm
+[bench]   wall=6326 render=5797 exit=0
+[bench] mpirun --map-by ppr:2:node -np 4 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t20_r4_run2.ppm
+[bench]   wall=6367 render=5794 exit=0
+[bench] mpirun --map-by ppr:2:node -np 4 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t20_r4_run3.ppm
+[bench]   wall=6327 render=5785 exit=0
+[bench] mpirun --map-by ppr:2:node -np 4 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t20_r4_run4.ppm
+[bench]   wall=6327 render=5796 exit=0
+[bench] mpirun --map-by ppr:4:node -np 8 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t10_r8_run0.ppm
+[bench]   wall=12029 render=11376 exit=0
+[bench] mpirun --map-by ppr:4:node -np 8 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t10_r8_run1.ppm
+[bench]   wall=11924 render=11172 exit=0
+[bench] mpirun --map-by ppr:4:node -np 8 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t10_r8_run2.ppm
+[bench]   wall=11792 render=11141 exit=0
+[bench] mpirun --map-by ppr:4:node -np 8 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t10_r8_run3.ppm
+[bench]   wall=11856 render=11138 exit=0
+[bench] mpirun --map-by ppr:4:node -np 8 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t10_r8_run4.ppm
+[bench]   wall=11906 render=11192 exit=0
+[bench] mpirun --map-by ppr:8:node -np 16 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t5_r16_run0.ppm
+[bench]   wall=22782 render=21703 exit=0
+[bench] mpirun --map-by ppr:8:node -np 16 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t5_r16_run1.ppm
+[bench]   wall=22986 render=21860 exit=0
+[bench] mpirun --map-by ppr:8:node -np 16 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t5_r16_run2.ppm
+[bench]   wall=23106 render=22114 exit=0
+[bench] mpirun --map-by ppr:8:node -np 16 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t5_r16_run3.ppm
+[bench]   wall=22891 render=21826 exit=0
+[bench] mpirun --map-by ppr:8:node -np 16 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t5_r16_run4.ppm
+[bench]   wall=23466 render=22348 exit=0
+
+=== AGGREGATE (still on /tmp) ===
+
+Copying /tmp/cs24s009_rtmpi_1746558 -> results/20260507_061918_mpirescue ...

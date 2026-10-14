@@ -1,0 +1,26 @@
+# Phase 5 scene, now loaded from text.
+image 800 450
+camera pos 0 1.2 3.0 lookat 0 0.4 -0.8 up 0 1 0 vfov 45
+background 0.60 0.75 0.95
+ambient    0.04 0.04 0.05
+max_depth  10
+
+material gray   albedo 0.55 0.55 0.55 specular 1 1 1 shininess 40  reflectivity 0.10
+material red    albedo 0.80 0.15 0.15 specular 1 1 1 shininess 80
+material green  albedo 0.15 0.60 0.20 specular 1 1 1 shininess 80
+material mirror albedo 0.02 0.02 0.02 specular 1 1 1 shininess 200 reflectivity 0.95
+material glass  ior 1.5
+
+light point pos -3 5  2 intensity 0.8 0.8 0.8
+light point pos  3 4 -1 intensity 0.5 0.5 0.6
+
+plane point 0 0 0 normal 0 1 0 material gray
+
+sphere center -1.6 0.5 -0.4 radius 0.5 material red
+sphere center  0.0 0.6 -0.8 radius 0.6 material mirror
+sphere center  1.6 0.5 -0.4 radius 0.5 material glass
+
+csg difference material green {
+    box    min -0.5 0.0 -2.5  max 0.5 1.0 -1.5
+    sphere center 0.5 1.0 -1.5 radius 0.55
+}

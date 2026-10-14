@@ -1,0 +1,1139 @@
+===========================================
+Rescue job  20260506_200737
+Nodes:  4
+Hosts:  cn168.ib0.cm.aqua.iitm.ac.in cn169.ib0.cm.aqua.iitm.ac.in cn170.ib0.cm.aqua.iitm.ac.in cn171.ib0.cm.aqua.iitm.ac.in 
+Started: Wed May  6 20:07:37 IST 2026
+===========================================
+
+=== LLVM probe ===
+
+=== TIER 1.1: Mitsuba 8192-SPP ground truth ===
+[bench] mitsuba -m llvm_ad_rgb -o output/_bench/mitsuba_llvm_cornell_box_t40_r1_run0.exr -t 40 -D spp=8192 scenes/cornell_box.xml
+[bench]   wall=24510 render=23662 exit=0
+
+=== TIER 1.4: Pure MPI strong scaling (1 thread/rank) ===
+[bench] mpirun -np 1 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r1_run0.ppm
+[bench]   wall=3214 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun -np 1 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r1_run1.ppm
+[bench]   wall=389 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun -np 1 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r1_run2.ppm
+[bench]   wall=386 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun -np 1 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r1_run3.ppm
+[bench]   wall=383 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun -np 1 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r1_run4.ppm
+[bench]   wall=382 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun -np 2 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r2_run0.ppm
+[bench]   wall=385 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun -np 2 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r2_run1.ppm
+[bench]   wall=387 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun -np 2 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r2_run2.ppm
+[bench]   wall=383 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun -np 2 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r2_run3.ppm
+[bench]   wall=400 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun -np 2 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r2_run4.ppm
+[bench]   wall=383 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun -np 4 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r4_run0.ppm
+[bench]   wall=384 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun -np 4 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r4_run1.ppm
+[bench]   wall=433 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun -np 4 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r4_run2.ppm
+[bench]   wall=383 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun -np 4 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r4_run3.ppm
+[bench]   wall=386 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun -np 4 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r4_run4.ppm
+[bench]   wall=383 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun -np 8 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r8_run0.ppm
+[bench]   wall=382 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun -np 8 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r8_run1.ppm
+[bench]   wall=384 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun -np 8 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r8_run2.ppm
+[bench]   wall=387 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun -np 8 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r8_run3.ppm
+[bench]   wall=386 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun -np 8 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r8_run4.ppm
+[bench]   wall=384 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun -np 16 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r16_run0.ppm
+[bench]   wall=407 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun -np 16 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r16_run1.ppm
+[bench]   wall=386 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun -np 16 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r16_run2.ppm
+[bench]   wall=384 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun -np 16 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r16_run3.ppm
+[bench]   wall=387 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun -np 16 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r16_run4.ppm
+[bench]   wall=424 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun -np 32 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r32_run0.ppm
+[bench]   wall=387 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun -np 32 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r32_run1.ppm
+[bench]   wall=390 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun -np 32 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r32_run2.ppm
+[bench]   wall=387 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun -np 32 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r32_run3.ppm
+[bench]   wall=388 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun -np 32 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r32_run4.ppm
+[bench]   wall=388 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun -np 64 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r64_run0.ppm
+[bench]   wall=389 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun -np 64 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r64_run1.ppm
+[bench]   wall=389 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun -np 64 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r64_run2.ppm
+[bench]   wall=400 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun -np 64 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r64_run3.ppm
+[bench]   wall=389 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun -np 64 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r64_run4.ppm
+[bench]   wall=435 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun -np 128 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r128_run0.ppm
+[bench]   wall=389 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun -np 128 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r128_run1.ppm
+[bench]   wall=423 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun -np 128 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r128_run2.ppm
+[bench]   wall=390 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun -np 128 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r128_run3.ppm
+[bench]   wall=391 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun -np 128 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r128_run4.ppm
+[bench]   wall=390 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun -np 160 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r160_run0.ppm
+[bench]   wall=395 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun -np 160 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r160_run1.ppm
+[bench]   wall=401 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun -np 160 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r160_run2.ppm
+[bench]   wall=407 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun -np 160 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r160_run3.ppm
+[bench]   wall=392 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun -np 160 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r160_run4.ppm
+[bench]   wall=434 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+
+=== TIER 2.3: Hybrid MPI+OMP sweep (single + dual node) ===
+[bench] mpirun -np 1 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t40_r1_run0.ppm
+[bench]   wall=387 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun -np 1 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t40_r1_run1.ppm
+[bench]   wall=386 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun -np 1 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t40_r1_run2.ppm
+[bench]   wall=385 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun -np 1 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t40_r1_run3.ppm
+[bench]   wall=404 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun -np 1 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t40_r1_run4.ppm
+[bench]   wall=382 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun -np 2 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t20_r2_run0.ppm
+[bench]   wall=388 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun -np 2 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t20_r2_run1.ppm
+[bench]   wall=386 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun -np 2 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t20_r2_run2.ppm
+[bench]   wall=384 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun -np 2 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t20_r2_run3.ppm
+[bench]   wall=381 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun -np 2 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t20_r2_run4.ppm
+[bench]   wall=386 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun -np 4 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t10_r4_run0.ppm
+[bench]   wall=386 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun -np 4 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t10_r4_run1.ppm
+[bench]   wall=400 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun -np 4 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t10_r4_run2.ppm
+[bench]   wall=383 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun -np 4 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t10_r4_run3.ppm
+[bench]   wall=402 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun -np 4 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t10_r4_run4.ppm
+[bench]   wall=382 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun -np 8 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t5_r8_run0.ppm
+[bench]   wall=410 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun -np 8 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t5_r8_run1.ppm
+[bench]   wall=383 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun -np 8 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t5_r8_run2.ppm
+[bench]   wall=382 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun -np 8 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t5_r8_run3.ppm
+[bench]   wall=381 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun -np 8 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t5_r8_run4.ppm
+[bench]   wall=387 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun -np 40 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r40_run0.ppm
+[bench]   wall=392 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun -np 40 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r40_run1.ppm
+[bench]   wall=388 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun -np 40 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r40_run2.ppm
+[bench]   wall=421 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun -np 40 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r40_run3.ppm
+[bench]   wall=390 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun -np 40 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r40_run4.ppm
+[bench]   wall=390 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun --map-by ppr:1:node -np 2 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t40_r2_run0.ppm
+[bench]   wall=385 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun --map-by ppr:1:node -np 2 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t40_r2_run1.ppm
+[bench]   wall=385 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun --map-by ppr:1:node -np 2 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t40_r2_run2.ppm
+[bench]   wall=382 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun --map-by ppr:1:node -np 2 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t40_r2_run3.ppm
+[bench]   wall=416 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun --map-by ppr:1:node -np 2 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t40_r2_run4.ppm
+[bench]   wall=381 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun --map-by ppr:2:node -np 4 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t20_r4_run0.ppm
+[bench]   wall=423 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun --map-by ppr:2:node -np 4 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t20_r4_run1.ppm
+[bench]   wall=426 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun --map-by ppr:2:node -np 4 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t20_r4_run2.ppm
+[bench]   wall=386 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun --map-by ppr:2:node -np 4 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t20_r4_run3.ppm
+[bench]   wall=385 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun --map-by ppr:2:node -np 4 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t20_r4_run4.ppm
+[bench]   wall=384 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun --map-by ppr:4:node -np 8 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t10_r8_run0.ppm
+[bench]   wall=388 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun --map-by ppr:4:node -np 8 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t10_r8_run1.ppm
+[bench]   wall=401 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun --map-by ppr:4:node -np 8 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t10_r8_run2.ppm
+[bench]   wall=385 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun --map-by ppr:4:node -np 8 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t10_r8_run3.ppm
+[bench]   wall=381 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun --map-by ppr:4:node -np 8 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t10_r8_run4.ppm
+[bench]   wall=385 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun --map-by ppr:8:node -np 16 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t5_r16_run0.ppm
+[bench]   wall=414 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun --map-by ppr:8:node -np 16 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t5_r16_run1.ppm
+[bench]   wall=385 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun --map-by ppr:8:node -np 16 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t5_r16_run2.ppm
+[bench]   wall=385 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun --map-by ppr:8:node -np 16 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t5_r16_run3.ppm
+[bench]   wall=388 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+[bench] mpirun --map-by ppr:8:node -np 16 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t5_r16_run4.ppm
+[bench]   wall=388 render=nan exit=132
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: build/release/rt_mpi
+Node: cn168
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+
+
+=== TIER 3.3: Mitsuba 3 LLVM sweep (Cornell 1024², T=40) ===
+[bench] mitsuba -m llvm_ad_rgb -o output/_bench/mitsuba_llvm_cornell_box_t40_r1_run0.exr -t 40 -D spp=4 scenes/cornell_box.xml
+[bench]   wall=493 render=nan exit=0
+[bench] mitsuba -m llvm_ad_rgb -o output/_bench/mitsuba_llvm_cornell_box_t40_r1_run1.exr -t 40 -D spp=4 scenes/cornell_box.xml
+[bench]   wall=575 render=nan exit=0
+[bench] mitsuba -m llvm_ad_rgb -o output/_bench/mitsuba_llvm_cornell_box_t40_r1_run2.exr -t 40 -D spp=4 scenes/cornell_box.xml
+[bench]   wall=548 render=nan exit=0
+[bench] mitsuba -m llvm_ad_rgb -o output/_bench/mitsuba_llvm_cornell_box_t40_r1_run0.exr -t 40 -D spp=16 scenes/cornell_box.xml
+[bench]   wall=533 render=nan exit=0
+[bench] mitsuba -m llvm_ad_rgb -o output/_bench/mitsuba_llvm_cornell_box_t40_r1_run1.exr -t 40 -D spp=16 scenes/cornell_box.xml
+[bench]   wall=571 render=nan exit=0
+[bench] mitsuba -m llvm_ad_rgb -o output/_bench/mitsuba_llvm_cornell_box_t40_r1_run2.exr -t 40 -D spp=16 scenes/cornell_box.xml
+[bench]   wall=530 render=nan exit=0
+[bench] mitsuba -m llvm_ad_rgb -o output/_bench/mitsuba_llvm_cornell_box_t40_r1_run0.exr -t 40 -D spp=64 scenes/cornell_box.xml
+[bench]   wall=674 render=nan exit=0
+[bench] mitsuba -m llvm_ad_rgb -o output/_bench/mitsuba_llvm_cornell_box_t40_r1_run1.exr -t 40 -D spp=64 scenes/cornell_box.xml
+[bench]   wall=656 render=nan exit=0
+[bench] mitsuba -m llvm_ad_rgb -o output/_bench/mitsuba_llvm_cornell_box_t40_r1_run2.exr -t 40 -D spp=64 scenes/cornell_box.xml
+[bench]   wall=656 render=nan exit=0
+[bench] mitsuba -m llvm_ad_rgb -o output/_bench/mitsuba_llvm_cornell_box_t40_r1_run0.exr -t 40 -D spp=256 scenes/cornell_box.xml
+[bench]   wall=1210 render=nan exit=0
+[bench] mitsuba -m llvm_ad_rgb -o output/_bench/mitsuba_llvm_cornell_box_t40_r1_run1.exr -t 40 -D spp=256 scenes/cornell_box.xml
+[bench]   wall=1203 render=nan exit=0
+[bench] mitsuba -m llvm_ad_rgb -o output/_bench/mitsuba_llvm_cornell_box_t40_r1_run2.exr -t 40 -D spp=256 scenes/cornell_box.xml
+[bench]   wall=1208 render=nan exit=0
+[bench] mitsuba -m llvm_ad_rgb -o output/_bench/mitsuba_llvm_cornell_box_t40_r1_run0.exr -t 40 -D spp=1024 scenes/cornell_box.xml
+[bench]   wall=3427 render=2972 exit=0
+[bench] mitsuba -m llvm_ad_rgb -o output/_bench/mitsuba_llvm_cornell_box_t40_r1_run1.exr -t 40 -D spp=1024 scenes/cornell_box.xml
+[bench]   wall=3419 render=2964 exit=0
+[bench] mitsuba -m llvm_ad_rgb -o output/_bench/mitsuba_llvm_cornell_box_t40_r1_run2.exr -t 40 -D spp=1024 scenes/cornell_box.xml
+[bench]   wall=3426 render=2971 exit=0
+
+=== AGGREGATING RESULTS ===
+Finished: Wed May  6 20:09:02 IST 2026
+Results:  results/20260506_200737_rescue/
+total 2110
+drwxr-xr-x 2 cs24s009 ms   33280 May  6 20:09 .
+drwxr-xr-x 3 cs24s009 ms     512 May  6 20:07 ..
+-rw-r--r-- 1 cs24s009 ms 2106471 May  6 20:08 gt_mitsuba_8192spp.exr
+-rw-r--r-- 1 cs24s009 ms   50903 May  6 20:09 run.log
+-rw-r--r-- 1 cs24s009 ms    3318 May  6 20:09 summary.csv
+-rw-r--r-- 1 cs24s009 ms   13434 May  6 20:09 timings.csv

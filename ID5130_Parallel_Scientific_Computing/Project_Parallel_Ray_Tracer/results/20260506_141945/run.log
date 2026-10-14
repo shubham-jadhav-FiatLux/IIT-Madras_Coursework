@@ -1,0 +1,1206 @@
+===========================================
+Job:    rt_paper  20260506_141945
+Nodes:  4 (allocated)
+Hosts:  cn155.ib0.cm.aqua.iitm.ac.in cn156.ib0.cm.aqua.iitm.ac.in cn157.ib0.cm.aqua.iitm.ac.in cn201.ib0.cm.aqua.iitm.ac.in 
+Started: Wed May  6 14:19:45 IST 2026
+===========================================
+CPU op-mode(s):        32-bit, 64-bit
+CPU(s):                40
+Core(s) per socket:    20
+Socket(s):             2
+NUMA node(s):          2
+CPU family:            6
+Model name:            Intel(R) Xeon(R) Gold 6248 CPU @ 2.50GHz
+CPU MHz:               2500.000
+NUMA node0 CPU(s):     0-19
+NUMA node1 CPU(s):     20-39
+
+=== CORRECTNESS GATE ===
+Toolchain: g++ (GCC) 9.2.0 | g++ (GCC) 9.2.0
+Python:    Python 3.11.5 at /lfs/usrhome/ms/cs24s009/local/mitsuba-venv/bin/python3
+Mitsuba:   jit_find_library(): Unable to load "/opt/intel/oneapi/intelpython/python3.9/lib/libLLVM-11.so": /opt/intel/oneapi/intelpython/python3.9/lib/libLLVM-11.so: cannot open shared object file: No such file or directory!
+jitc_llvm_init(): LLVM API initialization failed ..
+3.7.1
+=== build/release/test_test_primitives ===
+all primitive tests passed
+=== build/release/test_test_path ===
+all path tests passed
+=== build/release/test_test_classification ===
+all classification tests passed
+=== build/release/test_test_csg ===
+all CSG tests passed
+=== build/release/test_test_bvh ===
+all BVH tests passed
+make test: OK
+Whitted t1==t40: OK (a45169cded2b5d32855b171cf0509fc9)
+MPI np=4 t=1 == serial: OK
+
+=== TIER 1.1: Mitsuba 8192-SPP ground truth ===
+[bench] mitsuba -m llvm_ad_rgb -o output/_bench/mitsuba_llvm_cornell_box_t40_r1_run0.exr scenes/cornell_box.xml -D spp=8192 -t 40
+[bench]   wall=977 render=nan exit=248
+jit_find_library(): Unable to load "/opt/intel/oneapi/intelpython/python3.9/lib/libLLVM-11.so": /opt/intel/oneapi/intelpython/python3.9/lib/libLLVM-11.so: cannot open shared object file: No such file or directory!
+jitc_llvm_init(): LLVM API initialization failed ..
+
+
+=== TIER 1.2: OMP path-trace strong scaling (Cornell 1024² 256 SPP) ===
+[bench] build/release/rt scenes/cornell_box_1024_256spp.scene output/_bench/ours_omp_cornell_box_1024_256spp_t1_r1_run0.ppm
+[bench]   wall=379367 render=379354 exit=0
+[bench] build/release/rt scenes/cornell_box_1024_256spp.scene output/_bench/ours_omp_cornell_box_1024_256spp_t1_r1_run1.ppm
+[bench]   wall=404329 render=404314 exit=0
+[bench] build/release/rt scenes/cornell_box_1024_256spp.scene output/_bench/ours_omp_cornell_box_1024_256spp_t1_r1_run2.ppm
+[bench]   wall=379280 render=379260 exit=0
+[bench] build/release/rt scenes/cornell_box_1024_256spp.scene output/_bench/ours_omp_cornell_box_1024_256spp_t1_r1_run3.ppm
+[bench]   wall=379869 render=379852 exit=0
+[bench] build/release/rt scenes/cornell_box_1024_256spp.scene output/_bench/ours_omp_cornell_box_1024_256spp_t1_r1_run4.ppm
+[bench]   wall=379477 render=379462 exit=0
+[bench] build/release/rt scenes/cornell_box_1024_256spp.scene output/_bench/ours_omp_cornell_box_1024_256spp_t2_r1_run0.ppm
+[bench]   wall=189921 render=189889 exit=0
+[bench] build/release/rt scenes/cornell_box_1024_256spp.scene output/_bench/ours_omp_cornell_box_1024_256spp_t2_r1_run1.ppm
+[bench]   wall=189607 render=189595 exit=0
+[bench] build/release/rt scenes/cornell_box_1024_256spp.scene output/_bench/ours_omp_cornell_box_1024_256spp_t2_r1_run2.ppm
+[bench]   wall=189491 render=189478 exit=0
+[bench] build/release/rt scenes/cornell_box_1024_256spp.scene output/_bench/ours_omp_cornell_box_1024_256spp_t2_r1_run3.ppm
+[bench]   wall=189957 render=189944 exit=0
+[bench] build/release/rt scenes/cornell_box_1024_256spp.scene output/_bench/ours_omp_cornell_box_1024_256spp_t2_r1_run4.ppm
+[bench]   wall=189647 render=189634 exit=0
+[bench] build/release/rt scenes/cornell_box_1024_256spp.scene output/_bench/ours_omp_cornell_box_1024_256spp_t4_r1_run0.ppm
+[bench]   wall=96794 render=96782 exit=0
+[bench] build/release/rt scenes/cornell_box_1024_256spp.scene output/_bench/ours_omp_cornell_box_1024_256spp_t4_r1_run1.ppm
+[bench]   wall=96761 render=96749 exit=0
+[bench] build/release/rt scenes/cornell_box_1024_256spp.scene output/_bench/ours_omp_cornell_box_1024_256spp_t4_r1_run2.ppm
+[bench]   wall=97108 render=97096 exit=0
+[bench] build/release/rt scenes/cornell_box_1024_256spp.scene output/_bench/ours_omp_cornell_box_1024_256spp_t4_r1_run3.ppm
+[bench]   wall=97107 render=97094 exit=0
+[bench] build/release/rt scenes/cornell_box_1024_256spp.scene output/_bench/ours_omp_cornell_box_1024_256spp_t4_r1_run4.ppm
+[bench]   wall=97147 render=97134 exit=0
+[bench] build/release/rt scenes/cornell_box_1024_256spp.scene output/_bench/ours_omp_cornell_box_1024_256spp_t8_r1_run0.ppm
+[bench]   wall=55146 render=55118 exit=0
+[bench] build/release/rt scenes/cornell_box_1024_256spp.scene output/_bench/ours_omp_cornell_box_1024_256spp_t8_r1_run1.ppm
+[bench]   wall=52889 render=52824 exit=0
+[bench] build/release/rt scenes/cornell_box_1024_256spp.scene output/_bench/ours_omp_cornell_box_1024_256spp_t8_r1_run2.ppm
+[bench]   wall=54433 render=54420 exit=0
+[bench] build/release/rt scenes/cornell_box_1024_256spp.scene output/_bench/ours_omp_cornell_box_1024_256spp_t8_r1_run3.ppm
+[bench]   wall=54403 render=54376 exit=0
+[bench] build/release/rt scenes/cornell_box_1024_256spp.scene output/_bench/ours_omp_cornell_box_1024_256spp_t8_r1_run4.ppm
+[bench]   wall=54571 render=54560 exit=0
+[bench] build/release/rt scenes/cornell_box_1024_256spp.scene output/_bench/ours_omp_cornell_box_1024_256spp_t16_r1_run0.ppm
+[bench]   wall=34668 render=34642 exit=0
+[bench] build/release/rt scenes/cornell_box_1024_256spp.scene output/_bench/ours_omp_cornell_box_1024_256spp_t16_r1_run1.ppm
+[bench]   wall=38882 render=38870 exit=0
+[bench] build/release/rt scenes/cornell_box_1024_256spp.scene output/_bench/ours_omp_cornell_box_1024_256spp_t16_r1_run2.ppm
+[bench]   wall=34874 render=34862 exit=0
+[bench] build/release/rt scenes/cornell_box_1024_256spp.scene output/_bench/ours_omp_cornell_box_1024_256spp_t16_r1_run3.ppm
+[bench]   wall=36030 render=36018 exit=0
+[bench] build/release/rt scenes/cornell_box_1024_256spp.scene output/_bench/ours_omp_cornell_box_1024_256spp_t16_r1_run4.ppm
+[bench]   wall=37225 render=37213 exit=0
+[bench] build/release/rt scenes/cornell_box_1024_256spp.scene output/_bench/ours_omp_cornell_box_1024_256spp_t20_r1_run0.ppm
+[bench]   wall=32156 render=32143 exit=0
+[bench] build/release/rt scenes/cornell_box_1024_256spp.scene output/_bench/ours_omp_cornell_box_1024_256spp_t20_r1_run1.ppm
+[bench]   wall=33916 render=33904 exit=0
+[bench] build/release/rt scenes/cornell_box_1024_256spp.scene output/_bench/ours_omp_cornell_box_1024_256spp_t20_r1_run2.ppm
+[bench]   wall=32003 render=31992 exit=0
+[bench] build/release/rt scenes/cornell_box_1024_256spp.scene output/_bench/ours_omp_cornell_box_1024_256spp_t20_r1_run3.ppm
+[bench]   wall=35253 render=35237 exit=0
+[bench] build/release/rt scenes/cornell_box_1024_256spp.scene output/_bench/ours_omp_cornell_box_1024_256spp_t20_r1_run4.ppm
+[bench]   wall=35464 render=35452 exit=0
+[bench] build/release/rt scenes/cornell_box_1024_256spp.scene output/_bench/ours_omp_cornell_box_1024_256spp_t40_r1_run0.ppm
+[bench]   wall=9981 render=9967 exit=0
+[bench] build/release/rt scenes/cornell_box_1024_256spp.scene output/_bench/ours_omp_cornell_box_1024_256spp_t40_r1_run1.ppm
+[bench]   wall=9786 render=9772 exit=0
+[bench] build/release/rt scenes/cornell_box_1024_256spp.scene output/_bench/ours_omp_cornell_box_1024_256spp_t40_r1_run2.ppm
+[bench]   wall=10015 render=10001 exit=0
+[bench] build/release/rt scenes/cornell_box_1024_256spp.scene output/_bench/ours_omp_cornell_box_1024_256spp_t40_r1_run3.ppm
+[bench]   wall=9638 render=9602 exit=0
+[bench] build/release/rt scenes/cornell_box_1024_256spp.scene output/_bench/ours_omp_cornell_box_1024_256spp_t40_r1_run4.ppm
+[bench]   wall=9841 render=9808 exit=0
+
+=== TIER 1.3: OMP path-trace headline (1024² 1024 SPP) ===
+[bench] build/release/rt scenes/cornell_box_1024.scene output/_bench/ours_omp_cornell_box_1024_t1_r1_run0.ppm
+[bench]   wall=1513969 render=2 exit=0
+[bench] build/release/rt scenes/cornell_box_1024.scene output/_bench/ours_omp_cornell_box_1024_t1_r1_run1.ppm
+[bench]   wall=1521567 render=2 exit=0
+[bench] build/release/rt scenes/cornell_box_1024.scene output/_bench/ours_omp_cornell_box_1024_t1_r1_run2.ppm
+[bench]   wall=1514224 render=2 exit=0
+[bench] build/release/rt scenes/cornell_box_1024.scene output/_bench/ours_omp_cornell_box_1024_t1_r1_run3.ppm
+[bench]   wall=1518587 render=2 exit=0
+[bench] build/release/rt scenes/cornell_box_1024.scene output/_bench/ours_omp_cornell_box_1024_t1_r1_run4.ppm
+[bench]   wall=1519790 render=2 exit=0
+[bench] build/release/rt scenes/cornell_box_1024.scene output/_bench/ours_omp_cornell_box_1024_t40_r1_run0.ppm
+[bench]   wall=38361 render=38346 exit=0
+[bench] build/release/rt scenes/cornell_box_1024.scene output/_bench/ours_omp_cornell_box_1024_t40_r1_run1.ppm
+[bench]   wall=41350 render=41315 exit=0
+[bench] build/release/rt scenes/cornell_box_1024.scene output/_bench/ours_omp_cornell_box_1024_t40_r1_run2.ppm
+[bench]   wall=39925 render=39902 exit=0
+[bench] build/release/rt scenes/cornell_box_1024.scene output/_bench/ours_omp_cornell_box_1024_t40_r1_run3.ppm
+[bench]   wall=38352 render=38338 exit=0
+[bench] build/release/rt scenes/cornell_box_1024.scene output/_bench/ours_omp_cornell_box_1024_t40_r1_run4.ppm
+[bench]   wall=39310 render=39268 exit=0
+
+=== TIER 1.4: Pure MPI strong scaling (1 thread per rank) ===
+[bench] mpirun -ppn 1 -np 1 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r1_run0.ppm
+[bench]   wall=705 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 1 -np 1 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r1_run1.ppm
+[bench]   wall=11 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 1 -np 1 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r1_run2.ppm
+[bench]   wall=10 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 1 -np 1 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r1_run3.ppm
+[bench]   wall=11 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 1 -np 1 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r1_run4.ppm
+[bench]   wall=10 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 1 -np 2 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r2_run0.ppm
+[bench]   wall=10 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 1 -np 2 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r2_run1.ppm
+[bench]   wall=11 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 1 -np 2 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r2_run2.ppm
+[bench]   wall=10 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 1 -np 2 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r2_run3.ppm
+[bench]   wall=10 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 1 -np 2 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r2_run4.ppm
+[bench]   wall=10 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 1 -np 4 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r4_run0.ppm
+[bench]   wall=14 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 1 -np 4 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r4_run1.ppm
+[bench]   wall=9 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 1 -np 4 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r4_run2.ppm
+[bench]   wall=10 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 1 -np 4 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r4_run3.ppm
+[bench]   wall=10 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 1 -np 4 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r4_run4.ppm
+[bench]   wall=10 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 2 -np 8 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r8_run0.ppm
+[bench]   wall=11 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 2 -np 8 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r8_run1.ppm
+[bench]   wall=10 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 2 -np 8 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r8_run2.ppm
+[bench]   wall=9 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 2 -np 8 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r8_run3.ppm
+[bench]   wall=11 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 2 -np 8 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r8_run4.ppm
+[bench]   wall=10 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 4 -np 16 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r16_run0.ppm
+[bench]   wall=10 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 4 -np 16 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r16_run1.ppm
+[bench]   wall=10 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 4 -np 16 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r16_run2.ppm
+[bench]   wall=10 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 4 -np 16 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r16_run3.ppm
+[bench]   wall=10 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 4 -np 16 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r16_run4.ppm
+[bench]   wall=10 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 8 -np 32 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r32_run0.ppm
+[bench]   wall=10 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 8 -np 32 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r32_run1.ppm
+[bench]   wall=9 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 8 -np 32 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r32_run2.ppm
+[bench]   wall=11 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 8 -np 32 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r32_run3.ppm
+[bench]   wall=9 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 8 -np 32 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r32_run4.ppm
+[bench]   wall=9 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 16 -np 64 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r64_run0.ppm
+[bench]   wall=11 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 16 -np 64 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r64_run1.ppm
+[bench]   wall=10 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 16 -np 64 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r64_run2.ppm
+[bench]   wall=9 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 16 -np 64 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r64_run3.ppm
+[bench]   wall=10 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 16 -np 64 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r64_run4.ppm
+[bench]   wall=10 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 32 -np 128 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r128_run0.ppm
+[bench]   wall=10 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 32 -np 128 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r128_run1.ppm
+[bench]   wall=10 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 32 -np 128 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r128_run2.ppm
+[bench]   wall=10 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 32 -np 128 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r128_run3.ppm
+[bench]   wall=10 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 32 -np 128 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r128_run4.ppm
+[bench]   wall=11 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 40 -np 160 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r160_run0.ppm
+[bench]   wall=10 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 40 -np 160 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r160_run1.ppm
+[bench]   wall=10 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 40 -np 160 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r160_run2.ppm
+[bench]   wall=11 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 40 -np 160 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r160_run3.ppm
+[bench]   wall=10 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 40 -np 160 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r160_run4.ppm
+[bench]   wall=10 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+
+=== TIER 1.5: Adaptive vs static (single-node T=40 + dual-rank np=2 t=20) ===
+[bench] build/release/rt scenes/cornell_box_1024_256spp.scene output/_bench/ours_omp_cornell_box_1024_256spp_t40_r1_run0.ppm
+[bench]   wall=10390 render=10334 exit=0
+[bench] build/release/rt scenes/cornell_box_1024_256spp.scene output/_bench/ours_omp_cornell_box_1024_256spp_t40_r1_run1.ppm
+[bench]   wall=9649 render=9634 exit=0
+[bench] build/release/rt scenes/cornell_box_1024_256spp.scene output/_bench/ours_omp_cornell_box_1024_256spp_t40_r1_run2.ppm
+[bench]   wall=9627 render=9604 exit=0
+[bench] build/release/rt scenes/cornell_box_1024_256spp.scene output/_bench/ours_omp_cornell_box_1024_256spp_t40_r1_run3.ppm
+[bench]   wall=9781 render=9708 exit=0
+[bench] build/release/rt scenes/cornell_box_1024_256spp.scene output/_bench/ours_omp_cornell_box_1024_256spp_t40_r1_run4.ppm
+[bench]   wall=10460 render=10391 exit=0
+[bench] build/release/rt scenes/cornell_box_1024_256spp.scene output/_bench/ours_omp_cornell_box_1024_256spp_t40_r1_run0_adp.ppm --adaptive
+[bench]   wall=10006 render=9991 exit=0
+[bench] build/release/rt scenes/cornell_box_1024_256spp.scene output/_bench/ours_omp_cornell_box_1024_256spp_t40_r1_run1_adp.ppm --adaptive
+[bench]   wall=10055 render=10039 exit=0
+[bench] build/release/rt scenes/cornell_box_1024_256spp.scene output/_bench/ours_omp_cornell_box_1024_256spp_t40_r1_run2_adp.ppm --adaptive
+[bench]   wall=9972 render=9938 exit=0
+[bench] build/release/rt scenes/cornell_box_1024_256spp.scene output/_bench/ours_omp_cornell_box_1024_256spp_t40_r1_run3_adp.ppm --adaptive
+[bench]   wall=9955 render=9940 exit=0
+[bench] build/release/rt scenes/cornell_box_1024_256spp.scene output/_bench/ours_omp_cornell_box_1024_256spp_t40_r1_run4_adp.ppm --adaptive
+[bench]   wall=10012 render=9997 exit=0
+[bench] mpirun -np 2 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t20_r2_run0.ppm
+[bench]   wall=207704 render=203732 exit=0
+[bench] mpirun -np 2 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t20_r2_run1.ppm
+[bench]   wall=204197 render=203668 exit=0
+[bench] mpirun -np 2 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t20_r2_run2.ppm
+[bench]   wall=204295 render=203789 exit=0
+[bench] mpirun -np 2 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t20_r2_run3.ppm
+[bench]   wall=204474 render=203952 exit=0
+[bench] mpirun -np 2 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t20_r2_run4.ppm
+[bench]   wall=204340 render=203827 exit=0
+[bench] mpirun -np 2 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t20_r2_run0_adp.ppm --adaptive
+[bench]   wall=199127 render=192523 exit=0
+[bench] mpirun -np 2 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t20_r2_run1_adp.ppm --adaptive
+[bench]   wall=199056 render=192470 exit=0
+[bench] mpirun -np 2 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t20_r2_run2_adp.ppm --adaptive
+[bench]   wall=199073 render=192499 exit=0
+[bench] mpirun -np 2 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t20_r2_run3_adp.ppm --adaptive
+[bench]   wall=199033 render=192457 exit=0
+[bench] mpirun -np 2 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t20_r2_run4_adp.ppm --adaptive
+[bench]   wall=199209 render=192605 exit=0
+
+=== TIER 2.1: Whitted strong scaling (clean re-run) ===
+[bench] build/release/rt scenes/whitted_showcase_1024.scene output/_bench/ours_omp_whitted_showcase_1024_t1_r1_run0.ppm
+[bench]   wall=1218 render=1202 exit=0
+[bench] build/release/rt scenes/whitted_showcase_1024.scene output/_bench/ours_omp_whitted_showcase_1024_t1_r1_run1.ppm
+[bench]   wall=1209 render=1197 exit=0
+[bench] build/release/rt scenes/whitted_showcase_1024.scene output/_bench/ours_omp_whitted_showcase_1024_t1_r1_run2.ppm
+[bench]   wall=1212 render=1201 exit=0
+[bench] build/release/rt scenes/whitted_showcase_1024.scene output/_bench/ours_omp_whitted_showcase_1024_t1_r1_run3.ppm
+[bench]   wall=1211 render=1199 exit=0
+[bench] build/release/rt scenes/whitted_showcase_1024.scene output/_bench/ours_omp_whitted_showcase_1024_t1_r1_run4.ppm
+[bench]   wall=1211 render=1198 exit=0
+[bench] build/release/rt scenes/whitted_showcase_1024.scene output/_bench/ours_omp_whitted_showcase_1024_t1_r1_run0_adp.ppm --adaptive
+[bench]   wall=1223 render=1211 exit=0
+[bench] build/release/rt scenes/whitted_showcase_1024.scene output/_bench/ours_omp_whitted_showcase_1024_t1_r1_run1_adp.ppm --adaptive
+[bench]   wall=1219 render=1208 exit=0
+[bench] build/release/rt scenes/whitted_showcase_1024.scene output/_bench/ours_omp_whitted_showcase_1024_t1_r1_run2_adp.ppm --adaptive
+[bench]   wall=1221 render=1209 exit=0
+[bench] build/release/rt scenes/whitted_showcase_1024.scene output/_bench/ours_omp_whitted_showcase_1024_t1_r1_run3_adp.ppm --adaptive
+[bench]   wall=1219 render=1208 exit=0
+[bench] build/release/rt scenes/whitted_showcase_1024.scene output/_bench/ours_omp_whitted_showcase_1024_t1_r1_run4_adp.ppm --adaptive
+[bench]   wall=1241 render=1230 exit=0
+[bench] build/release/rt scenes/whitted_showcase_1024.scene output/_bench/ours_omp_whitted_showcase_1024_t2_r1_run0.ppm
+[bench]   wall=611 render=600 exit=0
+[bench] build/release/rt scenes/whitted_showcase_1024.scene output/_bench/ours_omp_whitted_showcase_1024_t2_r1_run1.ppm
+[bench]   wall=610 render=600 exit=0
+[bench] build/release/rt scenes/whitted_showcase_1024.scene output/_bench/ours_omp_whitted_showcase_1024_t2_r1_run2.ppm
+[bench]   wall=610 render=599 exit=0
+[bench] build/release/rt scenes/whitted_showcase_1024.scene output/_bench/ours_omp_whitted_showcase_1024_t2_r1_run3.ppm
+[bench]   wall=611 render=601 exit=0
+[bench] build/release/rt scenes/whitted_showcase_1024.scene output/_bench/ours_omp_whitted_showcase_1024_t2_r1_run4.ppm
+[bench]   wall=610 render=600 exit=0
+[bench] build/release/rt scenes/whitted_showcase_1024.scene output/_bench/ours_omp_whitted_showcase_1024_t2_r1_run0_adp.ppm --adaptive
+[bench]   wall=655 render=606 exit=0
+[bench] build/release/rt scenes/whitted_showcase_1024.scene output/_bench/ours_omp_whitted_showcase_1024_t2_r1_run1_adp.ppm --adaptive
+[bench]   wall=685 render=607 exit=0
+[bench] build/release/rt scenes/whitted_showcase_1024.scene output/_bench/ours_omp_whitted_showcase_1024_t2_r1_run2_adp.ppm --adaptive
+[bench]   wall=618 render=607 exit=0
+[bench] build/release/rt scenes/whitted_showcase_1024.scene output/_bench/ours_omp_whitted_showcase_1024_t2_r1_run3_adp.ppm --adaptive
+[bench]   wall=617 render=606 exit=0
+[bench] build/release/rt scenes/whitted_showcase_1024.scene output/_bench/ours_omp_whitted_showcase_1024_t2_r1_run4_adp.ppm --adaptive
+[bench]   wall=617 render=607 exit=0
+[bench] build/release/rt scenes/whitted_showcase_1024.scene output/_bench/ours_omp_whitted_showcase_1024_t4_r1_run0.ppm
+[bench]   wall=429 render=301 exit=0
+[bench] build/release/rt scenes/whitted_showcase_1024.scene output/_bench/ours_omp_whitted_showcase_1024_t4_r1_run1.ppm
+[bench]   wall=330 render=302 exit=0
+[bench] build/release/rt scenes/whitted_showcase_1024.scene output/_bench/ours_omp_whitted_showcase_1024_t4_r1_run2.ppm
+[bench]   wall=320 render=305 exit=0
+[bench] build/release/rt scenes/whitted_showcase_1024.scene output/_bench/ours_omp_whitted_showcase_1024_t4_r1_run3.ppm
+[bench]   wall=314 render=303 exit=0
+[bench] build/release/rt scenes/whitted_showcase_1024.scene output/_bench/ours_omp_whitted_showcase_1024_t4_r1_run4.ppm
+[bench]   wall=313 render=303 exit=0
+[bench] build/release/rt scenes/whitted_showcase_1024.scene output/_bench/ours_omp_whitted_showcase_1024_t4_r1_run0_adp.ppm --adaptive
+[bench]   wall=315 render=305 exit=0
+[bench] build/release/rt scenes/whitted_showcase_1024.scene output/_bench/ours_omp_whitted_showcase_1024_t4_r1_run1_adp.ppm --adaptive
+[bench]   wall=316 render=305 exit=0
+[bench] build/release/rt scenes/whitted_showcase_1024.scene output/_bench/ours_omp_whitted_showcase_1024_t4_r1_run2_adp.ppm --adaptive
+[bench]   wall=316 render=306 exit=0
+[bench] build/release/rt scenes/whitted_showcase_1024.scene output/_bench/ours_omp_whitted_showcase_1024_t4_r1_run3_adp.ppm --adaptive
+[bench]   wall=317 render=306 exit=0
+[bench] build/release/rt scenes/whitted_showcase_1024.scene output/_bench/ours_omp_whitted_showcase_1024_t4_r1_run4_adp.ppm --adaptive
+[bench]   wall=317 render=306 exit=0
+[bench] build/release/rt scenes/whitted_showcase_1024.scene output/_bench/ours_omp_whitted_showcase_1024_t8_r1_run0.ppm
+[bench]   wall=180 render=168 exit=0
+[bench] build/release/rt scenes/whitted_showcase_1024.scene output/_bench/ours_omp_whitted_showcase_1024_t8_r1_run1.ppm
+[bench]   wall=307 render=173 exit=0
+[bench] build/release/rt scenes/whitted_showcase_1024.scene output/_bench/ours_omp_whitted_showcase_1024_t8_r1_run2.ppm
+[bench]   wall=204 render=175 exit=0
+[bench] build/release/rt scenes/whitted_showcase_1024.scene output/_bench/ours_omp_whitted_showcase_1024_t8_r1_run3.ppm
+[bench]   wall=294 render=206 exit=0
+[bench] build/release/rt scenes/whitted_showcase_1024.scene output/_bench/ours_omp_whitted_showcase_1024_t8_r1_run4.ppm
+[bench]   wall=192 render=181 exit=0
+[bench] build/release/rt scenes/whitted_showcase_1024.scene output/_bench/ours_omp_whitted_showcase_1024_t8_r1_run0_adp.ppm --adaptive
+[bench]   wall=568 render=172 exit=0
+[bench] build/release/rt scenes/whitted_showcase_1024.scene output/_bench/ours_omp_whitted_showcase_1024_t8_r1_run1_adp.ppm --adaptive
+[bench]   wall=248 render=166 exit=0
+[bench] build/release/rt scenes/whitted_showcase_1024.scene output/_bench/ours_omp_whitted_showcase_1024_t8_r1_run2_adp.ppm --adaptive
+[bench]   wall=275 render=172 exit=0
+[bench] build/release/rt scenes/whitted_showcase_1024.scene output/_bench/ours_omp_whitted_showcase_1024_t8_r1_run3_adp.ppm --adaptive
+[bench]   wall=200 render=169 exit=0
+[bench] build/release/rt scenes/whitted_showcase_1024.scene output/_bench/ours_omp_whitted_showcase_1024_t8_r1_run4_adp.ppm --adaptive
+[bench]   wall=903 render=177 exit=0
+[bench] build/release/rt scenes/whitted_showcase_1024.scene output/_bench/ours_omp_whitted_showcase_1024_t16_r1_run0.ppm
+[bench]   wall=154 render=142 exit=0
+[bench] build/release/rt scenes/whitted_showcase_1024.scene output/_bench/ours_omp_whitted_showcase_1024_t16_r1_run1.ppm
+[bench]   wall=205 render=125 exit=0
+[bench] build/release/rt scenes/whitted_showcase_1024.scene output/_bench/ours_omp_whitted_showcase_1024_t16_r1_run2.ppm
+[bench]   wall=144 render=132 exit=0
+[bench] build/release/rt scenes/whitted_showcase_1024.scene output/_bench/ours_omp_whitted_showcase_1024_t16_r1_run3.ppm
+[bench]   wall=142 render=131 exit=0
+[bench] build/release/rt scenes/whitted_showcase_1024.scene output/_bench/ours_omp_whitted_showcase_1024_t16_r1_run4.ppm
+[bench]   wall=247 render=139 exit=0
+[bench] build/release/rt scenes/whitted_showcase_1024.scene output/_bench/ours_omp_whitted_showcase_1024_t16_r1_run0_adp.ppm --adaptive
+[bench]   wall=139 render=128 exit=0
+[bench] build/release/rt scenes/whitted_showcase_1024.scene output/_bench/ours_omp_whitted_showcase_1024_t16_r1_run1_adp.ppm --adaptive
+[bench]   wall=158 render=127 exit=0
+[bench] build/release/rt scenes/whitted_showcase_1024.scene output/_bench/ours_omp_whitted_showcase_1024_t16_r1_run2_adp.ppm --adaptive
+[bench]   wall=104 render=94 exit=0
+[bench] build/release/rt scenes/whitted_showcase_1024.scene output/_bench/ours_omp_whitted_showcase_1024_t16_r1_run3_adp.ppm --adaptive
+[bench]   wall=212 render=119 exit=0
+[bench] build/release/rt scenes/whitted_showcase_1024.scene output/_bench/ours_omp_whitted_showcase_1024_t16_r1_run4_adp.ppm --adaptive
+[bench]   wall=130 render=119 exit=0
+[bench] build/release/rt scenes/whitted_showcase_1024.scene output/_bench/ours_omp_whitted_showcase_1024_t20_r1_run0.ppm
+[bench]   wall=148 render=114 exit=0
+[bench] build/release/rt scenes/whitted_showcase_1024.scene output/_bench/ours_omp_whitted_showcase_1024_t20_r1_run1.ppm
+[bench]   wall=151 render=137 exit=0
+[bench] build/release/rt scenes/whitted_showcase_1024.scene output/_bench/ours_omp_whitted_showcase_1024_t20_r1_run2.ppm
+[bench]   wall=132 render=120 exit=0
+[bench] build/release/rt scenes/whitted_showcase_1024.scene output/_bench/ours_omp_whitted_showcase_1024_t20_r1_run3.ppm
+[bench]   wall=168 render=127 exit=0
+[bench] build/release/rt scenes/whitted_showcase_1024.scene output/_bench/ours_omp_whitted_showcase_1024_t20_r1_run4.ppm
+[bench]   wall=324 render=129 exit=0
+[bench] build/release/rt scenes/whitted_showcase_1024.scene output/_bench/ours_omp_whitted_showcase_1024_t20_r1_run0_adp.ppm --adaptive
+[bench]   wall=213 render=129 exit=0
+[bench] build/release/rt scenes/whitted_showcase_1024.scene output/_bench/ours_omp_whitted_showcase_1024_t20_r1_run1_adp.ppm --adaptive
+[bench]   wall=274 render=138 exit=0
+[bench] build/release/rt scenes/whitted_showcase_1024.scene output/_bench/ours_omp_whitted_showcase_1024_t20_r1_run2_adp.ppm --adaptive
+[bench]   wall=176 render=119 exit=0
+[bench] build/release/rt scenes/whitted_showcase_1024.scene output/_bench/ours_omp_whitted_showcase_1024_t20_r1_run3_adp.ppm --adaptive
+[bench]   wall=136 render=126 exit=0
+[bench] build/release/rt scenes/whitted_showcase_1024.scene output/_bench/ours_omp_whitted_showcase_1024_t20_r1_run4_adp.ppm --adaptive
+[bench]   wall=234 render=107 exit=0
+[bench] build/release/rt scenes/whitted_showcase_1024.scene output/_bench/ours_omp_whitted_showcase_1024_t40_r1_run0.ppm
+[bench]   wall=63 render=39 exit=0
+[bench] build/release/rt scenes/whitted_showcase_1024.scene output/_bench/ours_omp_whitted_showcase_1024_t40_r1_run1.ppm
+[bench]   wall=108 render=40 exit=0
+[bench] build/release/rt scenes/whitted_showcase_1024.scene output/_bench/ours_omp_whitted_showcase_1024_t40_r1_run2.ppm
+[bench]   wall=78 render=65 exit=0
+[bench] build/release/rt scenes/whitted_showcase_1024.scene output/_bench/ours_omp_whitted_showcase_1024_t40_r1_run3.ppm
+[bench]   wall=142 render=37 exit=0
+[bench] build/release/rt scenes/whitted_showcase_1024.scene output/_bench/ours_omp_whitted_showcase_1024_t40_r1_run4.ppm
+[bench]   wall=51 render=39 exit=0
+[bench] build/release/rt scenes/whitted_showcase_1024.scene output/_bench/ours_omp_whitted_showcase_1024_t40_r1_run0_adp.ppm --adaptive
+[bench]   wall=104 render=34 exit=0
+[bench] build/release/rt scenes/whitted_showcase_1024.scene output/_bench/ours_omp_whitted_showcase_1024_t40_r1_run1_adp.ppm --adaptive
+[bench]   wall=60 render=33 exit=0
+[bench] build/release/rt scenes/whitted_showcase_1024.scene output/_bench/ours_omp_whitted_showcase_1024_t40_r1_run2_adp.ppm --adaptive
+[bench]   wall=84 render=33 exit=0
+[bench] build/release/rt scenes/whitted_showcase_1024.scene output/_bench/ours_omp_whitted_showcase_1024_t40_r1_run3_adp.ppm --adaptive
+[bench]   wall=44 render=33 exit=0
+[bench] build/release/rt scenes/whitted_showcase_1024.scene output/_bench/ours_omp_whitted_showcase_1024_t40_r1_run4_adp.ppm --adaptive
+[bench]   wall=170 render=33 exit=0
+
+=== TIER 2.2: Adaptive on CSG-heavy scenes ===
+[bench] build/release/rt scenes/csg_swiss_cheese.scene output/_bench/ours_omp_csg_swiss_cheese_t1_r1_run0.ppm
+[bench]   wall=392 render=262 exit=0
+[bench] build/release/rt scenes/csg_swiss_cheese.scene output/_bench/ours_omp_csg_swiss_cheese_t1_r1_run1.ppm
+[bench]   wall=306 render=263 exit=0
+[bench] build/release/rt scenes/csg_swiss_cheese.scene output/_bench/ours_omp_csg_swiss_cheese_t1_r1_run2.ppm
+[bench]   wall=284 render=262 exit=0
+[bench] build/release/rt scenes/csg_swiss_cheese.scene output/_bench/ours_omp_csg_swiss_cheese_t1_r1_run3.ppm
+[bench]   wall=307 render=262 exit=0
+[bench] build/release/rt scenes/csg_swiss_cheese.scene output/_bench/ours_omp_csg_swiss_cheese_t1_r1_run4.ppm
+[bench]   wall=271 render=262 exit=0
+[bench] build/release/rt scenes/csg_swiss_cheese.scene output/_bench/ours_omp_csg_swiss_cheese_t1_r1_run0_adp.ppm --adaptive
+[bench]   wall=318 render=266 exit=0
+[bench] build/release/rt scenes/csg_swiss_cheese.scene output/_bench/ours_omp_csg_swiss_cheese_t1_r1_run1_adp.ppm --adaptive
+[bench]   wall=274 render=266 exit=0
+[bench] build/release/rt scenes/csg_swiss_cheese.scene output/_bench/ours_omp_csg_swiss_cheese_t1_r1_run2_adp.ppm --adaptive
+[bench]   wall=305 render=266 exit=0
+[bench] build/release/rt scenes/csg_swiss_cheese.scene output/_bench/ours_omp_csg_swiss_cheese_t1_r1_run3_adp.ppm --adaptive
+[bench]   wall=283 render=266 exit=0
+[bench] build/release/rt scenes/csg_swiss_cheese.scene output/_bench/ours_omp_csg_swiss_cheese_t1_r1_run4_adp.ppm --adaptive
+[bench]   wall=295 render=266 exit=0
+[bench] build/release/rt scenes/csg_swiss_cheese.scene output/_bench/ours_omp_csg_swiss_cheese_t8_r1_run0.ppm
+[bench]   wall=46 render=37 exit=0
+[bench] build/release/rt scenes/csg_swiss_cheese.scene output/_bench/ours_omp_csg_swiss_cheese_t8_r1_run1.ppm
+[bench]   wall=109 render=33 exit=0
+[bench] build/release/rt scenes/csg_swiss_cheese.scene output/_bench/ours_omp_csg_swiss_cheese_t8_r1_run2.ppm
+[bench]   wall=46 render=37 exit=0
+[bench] build/release/rt scenes/csg_swiss_cheese.scene output/_bench/ours_omp_csg_swiss_cheese_t8_r1_run3.ppm
+[bench]   wall=430 render=36 exit=0
+[bench] build/release/rt scenes/csg_swiss_cheese.scene output/_bench/ours_omp_csg_swiss_cheese_t8_r1_run4.ppm
+[bench]   wall=95 render=37 exit=0
+[bench] build/release/rt scenes/csg_swiss_cheese.scene output/_bench/ours_omp_csg_swiss_cheese_t8_r1_run0_adp.ppm --adaptive
+[bench]   wall=130 render=40 exit=0
+[bench] build/release/rt scenes/csg_swiss_cheese.scene output/_bench/ours_omp_csg_swiss_cheese_t8_r1_run1_adp.ppm --adaptive
+[bench]   wall=52 render=38 exit=0
+[bench] build/release/rt scenes/csg_swiss_cheese.scene output/_bench/ours_omp_csg_swiss_cheese_t8_r1_run2_adp.ppm --adaptive
+[bench]   wall=88 render=39 exit=0
+[bench] build/release/rt scenes/csg_swiss_cheese.scene output/_bench/ours_omp_csg_swiss_cheese_t8_r1_run3_adp.ppm --adaptive
+[bench]   wall=106 render=40 exit=0
+[bench] build/release/rt scenes/csg_swiss_cheese.scene output/_bench/ours_omp_csg_swiss_cheese_t8_r1_run4_adp.ppm --adaptive
+[bench]   wall=69 render=38 exit=0
+[bench] build/release/rt scenes/csg_swiss_cheese.scene output/_bench/ours_omp_csg_swiss_cheese_t40_r1_run0.ppm
+[bench]   wall=59 render=10 exit=0
+[bench] build/release/rt scenes/csg_swiss_cheese.scene output/_bench/ours_omp_csg_swiss_cheese_t40_r1_run1.ppm
+[bench]   wall=17 render=8 exit=0
+[bench] build/release/rt scenes/csg_swiss_cheese.scene output/_bench/ours_omp_csg_swiss_cheese_t40_r1_run2.ppm
+[bench]   wall=59 render=9 exit=0
+[bench] build/release/rt scenes/csg_swiss_cheese.scene output/_bench/ours_omp_csg_swiss_cheese_t40_r1_run3.ppm
+[bench]   wall=130 render=8 exit=0
+[bench] build/release/rt scenes/csg_swiss_cheese.scene output/_bench/ours_omp_csg_swiss_cheese_t40_r1_run4.ppm
+[bench]   wall=20 render=11 exit=0
+[bench] build/release/rt scenes/csg_swiss_cheese.scene output/_bench/ours_omp_csg_swiss_cheese_t40_r1_run0_adp.ppm --adaptive
+[bench]   wall=19 render=9 exit=0
+[bench] build/release/rt scenes/csg_swiss_cheese.scene output/_bench/ours_omp_csg_swiss_cheese_t40_r1_run1_adp.ppm --adaptive
+[bench]   wall=78 render=9 exit=0
+[bench] build/release/rt scenes/csg_swiss_cheese.scene output/_bench/ours_omp_csg_swiss_cheese_t40_r1_run2_adp.ppm --adaptive
+[bench]   wall=73 render=10 exit=0
+[bench] build/release/rt scenes/csg_swiss_cheese.scene output/_bench/ours_omp_csg_swiss_cheese_t40_r1_run3_adp.ppm --adaptive
+[bench]   wall=58 render=8 exit=0
+[bench] build/release/rt scenes/csg_swiss_cheese.scene output/_bench/ours_omp_csg_swiss_cheese_t40_r1_run4_adp.ppm --adaptive
+[bench]   wall=19 render=10 exit=0
+[bench] build/release/rt scenes/csg_lattice.scene output/_bench/ours_omp_csg_lattice_t1_r1_run0.ppm
+[bench]   wall=309 render=275 exit=0
+[bench] build/release/rt scenes/csg_lattice.scene output/_bench/ours_omp_csg_lattice_t1_r1_run1.ppm
+[bench]   wall=285 render=276 exit=0
+[bench] build/release/rt scenes/csg_lattice.scene output/_bench/ours_omp_csg_lattice_t1_r1_run2.ppm
+[bench]   wall=284 render=275 exit=0
+[bench] build/release/rt scenes/csg_lattice.scene output/_bench/ours_omp_csg_lattice_t1_r1_run3.ppm
+[bench]   wall=284 render=276 exit=0
+[bench] build/release/rt scenes/csg_lattice.scene output/_bench/ours_omp_csg_lattice_t1_r1_run4.ppm
+[bench]   wall=283 render=275 exit=0
+[bench] build/release/rt scenes/csg_lattice.scene output/_bench/ours_omp_csg_lattice_t1_r1_run0_adp.ppm --adaptive
+[bench]   wall=292 render=278 exit=0
+[bench] build/release/rt scenes/csg_lattice.scene output/_bench/ours_omp_csg_lattice_t1_r1_run1_adp.ppm --adaptive
+[bench]   wall=312 render=278 exit=0
+[bench] build/release/rt scenes/csg_lattice.scene output/_bench/ours_omp_csg_lattice_t1_r1_run2_adp.ppm --adaptive
+[bench]   wall=287 render=278 exit=0
+[bench] build/release/rt scenes/csg_lattice.scene output/_bench/ours_omp_csg_lattice_t1_r1_run3_adp.ppm --adaptive
+[bench]   wall=307 render=279 exit=0
+[bench] build/release/rt scenes/csg_lattice.scene output/_bench/ours_omp_csg_lattice_t1_r1_run4_adp.ppm --adaptive
+[bench]   wall=320 render=279 exit=0
+[bench] build/release/rt scenes/csg_lattice.scene output/_bench/ours_omp_csg_lattice_t8_r1_run0.ppm
+[bench]   wall=127 render=37 exit=0
+[bench] build/release/rt scenes/csg_lattice.scene output/_bench/ours_omp_csg_lattice_t8_r1_run1.ppm
+[bench]   wall=54 render=37 exit=0
+[bench] build/release/rt scenes/csg_lattice.scene output/_bench/ours_omp_csg_lattice_t8_r1_run2.ppm
+[bench]   wall=113 render=38 exit=0
+[bench] build/release/rt scenes/csg_lattice.scene output/_bench/ours_omp_csg_lattice_t8_r1_run3.ppm
+[bench]   wall=67 render=37 exit=0
+[bench] build/release/rt scenes/csg_lattice.scene output/_bench/ours_omp_csg_lattice_t8_r1_run4.ppm
+[bench]   wall=142 render=37 exit=0
+[bench] build/release/rt scenes/csg_lattice.scene output/_bench/ours_omp_csg_lattice_t8_r1_run0_adp.ppm --adaptive
+[bench]   wall=70 render=38 exit=0
+[bench] build/release/rt scenes/csg_lattice.scene output/_bench/ours_omp_csg_lattice_t8_r1_run1_adp.ppm --adaptive
+[bench]   wall=120 render=38 exit=0
+[bench] build/release/rt scenes/csg_lattice.scene output/_bench/ours_omp_csg_lattice_t8_r1_run2_adp.ppm --adaptive
+[bench]   wall=113 render=38 exit=0
+[bench] build/release/rt scenes/csg_lattice.scene output/_bench/ours_omp_csg_lattice_t8_r1_run3_adp.ppm --adaptive
+[bench]   wall=85 render=37 exit=0
+[bench] build/release/rt scenes/csg_lattice.scene output/_bench/ours_omp_csg_lattice_t8_r1_run4_adp.ppm --adaptive
+[bench]   wall=114 render=37 exit=0
+[bench] build/release/rt scenes/csg_lattice.scene output/_bench/ours_omp_csg_lattice_t40_r1_run0.ppm
+[bench]   wall=53 render=11 exit=0
+[bench] build/release/rt scenes/csg_lattice.scene output/_bench/ours_omp_csg_lattice_t40_r1_run1.ppm
+[bench]   wall=184 render=9 exit=0
+[bench] build/release/rt scenes/csg_lattice.scene output/_bench/ours_omp_csg_lattice_t40_r1_run2.ppm
+[bench]   wall=33 render=9 exit=0
+[bench] build/release/rt scenes/csg_lattice.scene output/_bench/ours_omp_csg_lattice_t40_r1_run3.ppm
+[bench]   wall=128 render=9 exit=0
+[bench] build/release/rt scenes/csg_lattice.scene output/_bench/ours_omp_csg_lattice_t40_r1_run4.ppm
+[bench]   wall=18 render=8 exit=0
+[bench] build/release/rt scenes/csg_lattice.scene output/_bench/ours_omp_csg_lattice_t40_r1_run0_adp.ppm --adaptive
+[bench]   wall=59 render=10 exit=0
+[bench] build/release/rt scenes/csg_lattice.scene output/_bench/ours_omp_csg_lattice_t40_r1_run1_adp.ppm --adaptive
+[bench]   wall=42 render=13 exit=0
+[bench] build/release/rt scenes/csg_lattice.scene output/_bench/ours_omp_csg_lattice_t40_r1_run2_adp.ppm --adaptive
+[bench]   wall=119 render=12 exit=0
+[bench] build/release/rt scenes/csg_lattice.scene output/_bench/ours_omp_csg_lattice_t40_r1_run3_adp.ppm --adaptive
+[bench]   wall=29 render=11 exit=0
+[bench] build/release/rt scenes/csg_lattice.scene output/_bench/ours_omp_csg_lattice_t40_r1_run4_adp.ppm --adaptive
+[bench]   wall=92 render=11 exit=0
+[bench] build/release/rt scenes/csg_menger.scene output/_bench/ours_omp_csg_menger_t1_r1_run0.ppm
+[bench]   wall=260 render=248 exit=0
+[bench] build/release/rt scenes/csg_menger.scene output/_bench/ours_omp_csg_menger_t1_r1_run1.ppm
+[bench]   wall=277 render=248 exit=0
+[bench] build/release/rt scenes/csg_menger.scene output/_bench/ours_omp_csg_menger_t1_r1_run2.ppm
+[bench]   wall=365 render=248 exit=0
+[bench] build/release/rt scenes/csg_menger.scene output/_bench/ours_omp_csg_menger_t1_r1_run3.ppm
+[bench]   wall=346 render=248 exit=0
+[bench] build/release/rt scenes/csg_menger.scene output/_bench/ours_omp_csg_menger_t1_r1_run4.ppm
+[bench]   wall=257 render=249 exit=0
+[bench] build/release/rt scenes/csg_menger.scene output/_bench/ours_omp_csg_menger_t1_r1_run0_adp.ppm --adaptive
+[bench]   wall=435 render=250 exit=0
+[bench] build/release/rt scenes/csg_menger.scene output/_bench/ours_omp_csg_menger_t1_r1_run1_adp.ppm --adaptive
+[bench]   wall=268 render=250 exit=0
+[bench] build/release/rt scenes/csg_menger.scene output/_bench/ours_omp_csg_menger_t1_r1_run2_adp.ppm --adaptive
+[bench]   wall=273 render=251 exit=0
+[bench] build/release/rt scenes/csg_menger.scene output/_bench/ours_omp_csg_menger_t1_r1_run3_adp.ppm --adaptive
+[bench]   wall=259 render=251 exit=0
+[bench] build/release/rt scenes/csg_menger.scene output/_bench/ours_omp_csg_menger_t1_r1_run4_adp.ppm --adaptive
+[bench]   wall=259 render=250 exit=0
+[bench] build/release/rt scenes/csg_menger.scene output/_bench/ours_omp_csg_menger_t8_r1_run0.ppm
+[bench]   wall=339 render=41 exit=0
+[bench] build/release/rt scenes/csg_menger.scene output/_bench/ours_omp_csg_menger_t8_r1_run1.ppm
+[bench]   wall=59 render=43 exit=0
+[bench] build/release/rt scenes/csg_menger.scene output/_bench/ours_omp_csg_menger_t8_r1_run2.ppm
+[bench]   wall=52 render=44 exit=0
+[bench] build/release/rt scenes/csg_menger.scene output/_bench/ours_omp_csg_menger_t8_r1_run3.ppm
+[bench]   wall=100 render=42 exit=0
+[bench] build/release/rt scenes/csg_menger.scene output/_bench/ours_omp_csg_menger_t8_r1_run4.ppm
+[bench]   wall=51 render=43 exit=0
+[bench] build/release/rt scenes/csg_menger.scene output/_bench/ours_omp_csg_menger_t8_r1_run0_adp.ppm --adaptive
+[bench]   wall=48 render=40 exit=0
+[bench] build/release/rt scenes/csg_menger.scene output/_bench/ours_omp_csg_menger_t8_r1_run1_adp.ppm --adaptive
+[bench]   wall=80 render=39 exit=0
+[bench] build/release/rt scenes/csg_menger.scene output/_bench/ours_omp_csg_menger_t8_r1_run2_adp.ppm --adaptive
+[bench]   wall=101 render=36 exit=0
+[bench] build/release/rt scenes/csg_menger.scene output/_bench/ours_omp_csg_menger_t8_r1_run3_adp.ppm --adaptive
+[bench]   wall=66 render=39 exit=0
+[bench] build/release/rt scenes/csg_menger.scene output/_bench/ours_omp_csg_menger_t8_r1_run4_adp.ppm --adaptive
+[bench]   wall=100 render=37 exit=0
+[bench] build/release/rt scenes/csg_menger.scene output/_bench/ours_omp_csg_menger_t40_r1_run0.ppm
+[bench]   wall=51 render=7 exit=0
+[bench] build/release/rt scenes/csg_menger.scene output/_bench/ours_omp_csg_menger_t40_r1_run1.ppm
+[bench]   wall=29 render=7 exit=0
+[bench] build/release/rt scenes/csg_menger.scene output/_bench/ours_omp_csg_menger_t40_r1_run2.ppm
+[bench]   wall=99 render=7 exit=0
+[bench] build/release/rt scenes/csg_menger.scene output/_bench/ours_omp_csg_menger_t40_r1_run3.ppm
+[bench]   wall=17 render=8 exit=0
+[bench] build/release/rt scenes/csg_menger.scene output/_bench/ours_omp_csg_menger_t40_r1_run4.ppm
+[bench]   wall=16 render=7 exit=0
+[bench] build/release/rt scenes/csg_menger.scene output/_bench/ours_omp_csg_menger_t40_r1_run0_adp.ppm --adaptive
+[bench]   wall=46 render=8 exit=0
+[bench] build/release/rt scenes/csg_menger.scene output/_bench/ours_omp_csg_menger_t40_r1_run1_adp.ppm --adaptive
+[bench]   wall=126 render=8 exit=0
+[bench] build/release/rt scenes/csg_menger.scene output/_bench/ours_omp_csg_menger_t40_r1_run2_adp.ppm --adaptive
+[bench]   wall=18 render=9 exit=0
+[bench] build/release/rt scenes/csg_menger.scene output/_bench/ours_omp_csg_menger_t40_r1_run3_adp.ppm --adaptive
+[bench]   wall=28 render=8 exit=0
+[bench] build/release/rt scenes/csg_menger.scene output/_bench/ours_omp_csg_menger_t40_r1_run4_adp.ppm --adaptive
+[bench]   wall=34 render=9 exit=0
+
+=== TIER 2.3: Hybrid MPI+OMP sweep (single + dual node) ===
+[bench] mpirun -ppn 1 -np 1 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t40_r1_run0.ppm
+[bench]   wall=12 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 1 -np 1 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t40_r1_run1.ppm
+[bench]   wall=10 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 1 -np 1 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t40_r1_run2.ppm
+[bench]   wall=9 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 1 -np 1 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t40_r1_run3.ppm
+[bench]   wall=10 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 1 -np 1 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t40_r1_run4.ppm
+[bench]   wall=10 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 2 -np 2 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t20_r2_run0.ppm
+[bench]   wall=10 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 2 -np 2 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t20_r2_run1.ppm
+[bench]   wall=10 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 2 -np 2 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t20_r2_run2.ppm
+[bench]   wall=11 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 2 -np 2 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t20_r2_run3.ppm
+[bench]   wall=10 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 2 -np 2 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t20_r2_run4.ppm
+[bench]   wall=10 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 4 -np 4 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t10_r4_run0.ppm
+[bench]   wall=10 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 4 -np 4 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t10_r4_run1.ppm
+[bench]   wall=10 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 4 -np 4 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t10_r4_run2.ppm
+[bench]   wall=11 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 4 -np 4 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t10_r4_run3.ppm
+[bench]   wall=10 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 4 -np 4 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t10_r4_run4.ppm
+[bench]   wall=10 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 8 -np 8 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t5_r8_run0.ppm
+[bench]   wall=10 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 8 -np 8 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t5_r8_run1.ppm
+[bench]   wall=10 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 8 -np 8 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t5_r8_run2.ppm
+[bench]   wall=11 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 8 -np 8 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t5_r8_run3.ppm
+[bench]   wall=13 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 8 -np 8 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t5_r8_run4.ppm
+[bench]   wall=10 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 40 -np 40 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r40_run0.ppm
+[bench]   wall=10 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 40 -np 40 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r40_run1.ppm
+[bench]   wall=10 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 40 -np 40 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r40_run2.ppm
+[bench]   wall=9 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 40 -np 40 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r40_run3.ppm
+[bench]   wall=9 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 40 -np 40 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t1_r40_run4.ppm
+[bench]   wall=10 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 1 -np 2 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t40_r2_run0.ppm
+[bench]   wall=11 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 1 -np 2 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t40_r2_run1.ppm
+[bench]   wall=10 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 1 -np 2 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t40_r2_run2.ppm
+[bench]   wall=10 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 1 -np 2 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t40_r2_run3.ppm
+[bench]   wall=10 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 1 -np 2 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t40_r2_run4.ppm
+[bench]   wall=10 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 2 -np 4 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t20_r4_run0.ppm
+[bench]   wall=10 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 2 -np 4 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t20_r4_run1.ppm
+[bench]   wall=10 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 2 -np 4 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t20_r4_run2.ppm
+[bench]   wall=10 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 2 -np 4 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t20_r4_run3.ppm
+[bench]   wall=10 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 2 -np 4 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t20_r4_run4.ppm
+[bench]   wall=10 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 4 -np 8 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t10_r8_run0.ppm
+[bench]   wall=10 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 4 -np 8 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t10_r8_run1.ppm
+[bench]   wall=10 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 4 -np 8 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t10_r8_run2.ppm
+[bench]   wall=10 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 4 -np 8 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t10_r8_run3.ppm
+[bench]   wall=9 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 4 -np 8 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t10_r8_run4.ppm
+[bench]   wall=9 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 8 -np 16 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t5_r16_run0.ppm
+[bench]   wall=10 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 8 -np 16 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t5_r16_run1.ppm
+[bench]   wall=10 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 8 -np 16 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t5_r16_run2.ppm
+[bench]   wall=9 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 8 -np 16 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t5_r16_run3.ppm
+[bench]   wall=10 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+[bench] mpirun -ppn 8 -np 16 build/release/rt_mpi scenes/cornell_box_1024_256spp.scene output/_bench/ours_mpi_cornell_box_1024_256spp_t5_r16_run4.ppm
+[bench]   wall=10 render=nan exit=1
+mpirun: Error: unknown option "-ppn"
+Type 'mpirun --help' for usage.
+
+
+=== TIER 2.4: Weak scaling (image area ∝ N) ===
+[bench] build/release/rt /tmp/cornell_w_512.scene output/_bench/ours_omp_cornell_w_512_t1_r1_run0.ppm
+[bench]   wall=94853 render=94845 exit=0
+[bench] build/release/rt /tmp/cornell_w_512.scene output/_bench/ours_omp_cornell_w_512_t1_r1_run1.ppm
+[bench]   wall=95519 render=95506 exit=0
+[bench] build/release/rt /tmp/cornell_w_512.scene output/_bench/ours_omp_cornell_w_512_t1_r1_run2.ppm
+[bench]   wall=94915 render=94905 exit=0
+[bench] build/release/rt /tmp/cornell_w_1024.scene output/_bench/ours_omp_cornell_w_1024_t4_r1_run0.ppm
+[bench]   wall=95449 render=95437 exit=0
+[bench] build/release/rt /tmp/cornell_w_1024.scene output/_bench/ours_omp_cornell_w_1024_t4_r1_run1.ppm
+[bench]   wall=95586 render=95575 exit=0
+[bench] build/release/rt /tmp/cornell_w_1024.scene output/_bench/ours_omp_cornell_w_1024_t4_r1_run2.ppm
+[bench]   wall=95807 render=95795 exit=0
+[bench] build/release/rt /tmp/cornell_w_2048.scene output/_bench/ours_omp_cornell_w_2048_t16_r1_run0.ppm
+[bench]   wall=119849 render=119827 exit=0
+[bench] build/release/rt /tmp/cornell_w_2048.scene output/_bench/ours_omp_cornell_w_2048_t16_r1_run1.ppm
+[bench]   wall=120470 render=120449 exit=0
+[bench] build/release/rt /tmp/cornell_w_2048.scene output/_bench/ours_omp_cornell_w_2048_t16_r1_run2.ppm
+[bench]   wall=122196 render=122174 exit=0
+[bench] build/release/rt /tmp/cornell_w_4096.scene output/_bench/ours_omp_cornell_w_4096_t64_r1_run0.ppm
+[bench]   wall=297283 render=297216 exit=0
+[bench] build/release/rt /tmp/cornell_w_4096.scene output/_bench/ours_omp_cornell_w_4096_t64_r1_run1.ppm
+[bench]   wall=274946 render=274879 exit=0
+[bench] build/release/rt /tmp/cornell_w_4096.scene output/_bench/ours_omp_cornell_w_4096_t64_r1_run2.ppm
+[bench]   wall=283073 render=282950 exit=0
+
+=== TIER 2.5: CSG-only benchmark (pbrt cannot render these) ===
+[bench] build/release/rt scenes/csg_swiss_cheese.scene output/_bench/ours_omp_csg_swiss_cheese_t40_r1_run0.ppm
+[bench]   wall=89 render=9 exit=0
+[bench] build/release/rt scenes/csg_swiss_cheese.scene output/_bench/ours_omp_csg_swiss_cheese_t40_r1_run1.ppm
+[bench]   wall=134 render=9 exit=0
+[bench] build/release/rt scenes/csg_swiss_cheese.scene output/_bench/ours_omp_csg_swiss_cheese_t40_r1_run2.ppm
+[bench]   wall=171 render=8 exit=0
+[bench] build/release/rt scenes/csg_swiss_cheese.scene output/_bench/ours_omp_csg_swiss_cheese_t40_r1_run3.ppm
+[bench]   wall=21 render=9 exit=0
+[bench] build/release/rt scenes/csg_swiss_cheese.scene output/_bench/ours_omp_csg_swiss_cheese_t40_r1_run4.ppm
+[bench]   wall=21 render=9 exit=0
+[bench] build/release/rt scenes/csg_swiss_cheese.scene output/_bench/ours_omp_csg_swiss_cheese_t40_r1_run0_adp.ppm --adaptive
+[bench]   wall=21 render=9 exit=0
+[bench] build/release/rt scenes/csg_swiss_cheese.scene output/_bench/ours_omp_csg_swiss_cheese_t40_r1_run1_adp.ppm --adaptive
+[bench]   wall=22 render=10 exit=0
+[bench] build/release/rt scenes/csg_swiss_cheese.scene output/_bench/ours_omp_csg_swiss_cheese_t40_r1_run2_adp.ppm --adaptive
+[bench]   wall=23 render=11 exit=0
+[bench] build/release/rt scenes/csg_swiss_cheese.scene output/_bench/ours_omp_csg_swiss_cheese_t40_r1_run3_adp.ppm --adaptive
+[bench]   wall=52 render=9 exit=0
+[bench] build/release/rt scenes/csg_swiss_cheese.scene output/_bench/ours_omp_csg_swiss_cheese_t40_r1_run4_adp.ppm --adaptive
+[bench]   wall=21 render=9 exit=0
+[bench] build/release/rt scenes/csg_lattice.scene output/_bench/ours_omp_csg_lattice_t40_r1_run0.ppm
+[bench]   wall=21 render=10 exit=0
+[bench] build/release/rt scenes/csg_lattice.scene output/_bench/ours_omp_csg_lattice_t40_r1_run1.ppm
+[bench]   wall=136 render=8 exit=0
+[bench] build/release/rt scenes/csg_lattice.scene output/_bench/ours_omp_csg_lattice_t40_r1_run2.ppm
+[bench]   wall=30 render=9 exit=0
+[bench] build/release/rt scenes/csg_lattice.scene output/_bench/ours_omp_csg_lattice_t40_r1_run3.ppm
+[bench]   wall=21 render=9 exit=0
+[bench] build/release/rt scenes/csg_lattice.scene output/_bench/ours_omp_csg_lattice_t40_r1_run4.ppm
+[bench]   wall=21 render=9 exit=0
+[bench] build/release/rt scenes/csg_lattice.scene output/_bench/ours_omp_csg_lattice_t40_r1_run0_adp.ppm --adaptive
+[bench]   wall=22 render=10 exit=0
+[bench] build/release/rt scenes/csg_lattice.scene output/_bench/ours_omp_csg_lattice_t40_r1_run1_adp.ppm --adaptive
+[bench]   wall=22 render=13 exit=0
+[bench] build/release/rt scenes/csg_lattice.scene output/_bench/ours_omp_csg_lattice_t40_r1_run2_adp.ppm --adaptive
+[bench]   wall=21 render=10 exit=0
+[bench] build/release/rt scenes/csg_lattice.scene output/_bench/ours_omp_csg_lattice_t40_r1_run3_adp.ppm --adaptive
+[bench]   wall=45 render=11 exit=0
+[bench] build/release/rt scenes/csg_lattice.scene output/_bench/ours_omp_csg_lattice_t40_r1_run4_adp.ppm --adaptive
+[bench]   wall=23 render=11 exit=0
+[bench] build/release/rt scenes/csg_menger.scene output/_bench/ours_omp_csg_menger_t40_r1_run0.ppm
+[bench]   wall=18 render=7 exit=0
+[bench] build/release/rt scenes/csg_menger.scene output/_bench/ours_omp_csg_menger_t40_r1_run1.ppm
+[bench]   wall=16 render=7 exit=0
+[bench] build/release/rt scenes/csg_menger.scene output/_bench/ours_omp_csg_menger_t40_r1_run2.ppm
+[bench]   wall=177 render=7 exit=0
+[bench] build/release/rt scenes/csg_menger.scene output/_bench/ours_omp_csg_menger_t40_r1_run3.ppm
+[bench]   wall=103 render=7 exit=0
+[bench] build/release/rt scenes/csg_menger.scene output/_bench/ours_omp_csg_menger_t40_r1_run4.ppm
+[bench]   wall=85 render=7 exit=0
+[bench] build/release/rt scenes/csg_menger.scene output/_bench/ours_omp_csg_menger_t40_r1_run0_adp.ppm --adaptive
+[bench]   wall=18 render=8 exit=0
+[bench] build/release/rt scenes/csg_menger.scene output/_bench/ours_omp_csg_menger_t40_r1_run1_adp.ppm --adaptive
+[bench]   wall=21 render=9 exit=0
+[bench] build/release/rt scenes/csg_menger.scene output/_bench/ours_omp_csg_menger_t40_r1_run2_adp.ppm --adaptive
+[bench]   wall=66 render=9 exit=0
+[bench] build/release/rt scenes/csg_menger.scene output/_bench/ours_omp_csg_menger_t40_r1_run3_adp.ppm --adaptive
+[bench]   wall=19 render=8 exit=0
+[bench] build/release/rt scenes/csg_menger.scene output/_bench/ours_omp_csg_menger_t40_r1_run4_adp.ppm --adaptive
+[bench]   wall=18 render=8 exit=0
+
+=== TIER 3.1: pbrt-v4 sweep (Cornell 1024², T=40) ===
+[skip] pbrt not on PATH — Tier 3.1 deferred (see REPORT_CONTEXT.md)
+
+=== TIER 3.2: Mitsuba 3 scalar sweep (Cornell 1024², T=1) ===
+[bench] mitsuba -m scalar_rgb -o output/_bench/mitsuba_scalar_cornell_box_t1_r1_run0.exr scenes/cornell_box.xml -D spp=4 -t 1
+[bench]   wall=9382 render=1091 exit=0
+[bench] mitsuba -m scalar_rgb -o output/_bench/mitsuba_scalar_cornell_box_t1_r1_run1.exr scenes/cornell_box.xml -D spp=4 -t 1
+[bench]   wall=1549 render=1099 exit=0
+[bench] mitsuba -m scalar_rgb -o output/_bench/mitsuba_scalar_cornell_box_t1_r1_run2.exr scenes/cornell_box.xml -D spp=4 -t 1
+[bench]   wall=1528 render=1097 exit=0
+[bench] mitsuba -m scalar_rgb -o output/_bench/mitsuba_scalar_cornell_box_t1_r1_run0.exr scenes/cornell_box.xml -D spp=16 -t 1
+[bench]   wall=4756 render=4338 exit=0
+[bench] mitsuba -m scalar_rgb -o output/_bench/mitsuba_scalar_cornell_box_t1_r1_run1.exr scenes/cornell_box.xml -D spp=16 -t 1
+[bench]   wall=4737 render=4316 exit=0
+[bench] mitsuba -m scalar_rgb -o output/_bench/mitsuba_scalar_cornell_box_t1_r1_run2.exr scenes/cornell_box.xml -D spp=16 -t 1
+[bench]   wall=4798 render=4380 exit=0
+[bench] mitsuba -m scalar_rgb -o output/_bench/mitsuba_scalar_cornell_box_t1_r1_run0.exr scenes/cornell_box.xml -D spp=64 -t 1
+[bench]   wall=17735 render=17320 exit=0
+[bench] mitsuba -m scalar_rgb -o output/_bench/mitsuba_scalar_cornell_box_t1_r1_run1.exr scenes/cornell_box.xml -D spp=64 -t 1
+[bench]   wall=18066 render=17647 exit=0
+[bench] mitsuba -m scalar_rgb -o output/_bench/mitsuba_scalar_cornell_box_t1_r1_run2.exr scenes/cornell_box.xml -D spp=64 -t 1
+[bench]   wall=17752 render=17331 exit=0
+[bench] mitsuba -m scalar_rgb -o output/_bench/mitsuba_scalar_cornell_box_t1_r1_run0.exr scenes/cornell_box.xml -D spp=256 -t 1
+[bench]   wall=69462 render=nan exit=0
+[bench] mitsuba -m scalar_rgb -o output/_bench/mitsuba_scalar_cornell_box_t1_r1_run1.exr scenes/cornell_box.xml -D spp=256 -t 1
+[bench]   wall=69583 render=nan exit=0
+[bench] mitsuba -m scalar_rgb -o output/_bench/mitsuba_scalar_cornell_box_t1_r1_run2.exr scenes/cornell_box.xml -D spp=256 -t 1
+[bench]   wall=69467 render=nan exit=0
+[bench] mitsuba -m scalar_rgb -o output/_bench/mitsuba_scalar_cornell_box_t1_r1_run0.exr scenes/cornell_box.xml -D spp=1024 -t 1
+[bench]   wall=277528 render=nan exit=0
+[bench] mitsuba -m scalar_rgb -o output/_bench/mitsuba_scalar_cornell_box_t1_r1_run1.exr scenes/cornell_box.xml -D spp=1024 -t 1
+[bench]   wall=275650 render=nan exit=0
+[bench] mitsuba -m scalar_rgb -o output/_bench/mitsuba_scalar_cornell_box_t1_r1_run2.exr scenes/cornell_box.xml -D spp=1024 -t 1
+[bench]   wall=277398 render=nan exit=0
+
+=== TIER 3.3: Mitsuba 3 LLVM sweep (Cornell 1024², T=40) ===
+[bench] mitsuba -m llvm_ad_rgb -o output/_bench/mitsuba_llvm_cornell_box_t40_r1_run0.exr scenes/cornell_box.xml -D spp=4 -t 40
+[bench]   wall=571 render=nan exit=248
+jit_find_library(): Unable to load "/opt/intel/oneapi/intelpython/python3.9/lib/libLLVM-11.so": /opt/intel/oneapi/intelpython/python3.9/lib/libLLVM-11.so: cannot open shared object file: No such file or directory!
+jitc_llvm_init(): LLVM API initialization failed ..
+
+[bench] mitsuba -m llvm_ad_rgb -o output/_bench/mitsuba_llvm_cornell_box_t40_r1_run1.exr scenes/cornell_box.xml -D spp=4 -t 40
+[bench]   wall=224 render=nan exit=248
+jit_find_library(): Unable to load "/opt/intel/oneapi/intelpython/python3.9/lib/libLLVM-11.so": /opt/intel/oneapi/intelpython/python3.9/lib/libLLVM-11.so: cannot open shared object file: No such file or directory!
+jitc_llvm_init(): LLVM API initialization failed ..
+
+[bench] mitsuba -m llvm_ad_rgb -o output/_bench/mitsuba_llvm_cornell_box_t40_r1_run2.exr scenes/cornell_box.xml -D spp=4 -t 40
+[bench]   wall=223 render=nan exit=248
+jit_find_library(): Unable to load "/opt/intel/oneapi/intelpython/python3.9/lib/libLLVM-11.so": /opt/intel/oneapi/intelpython/python3.9/lib/libLLVM-11.so: cannot open shared object file: No such file or directory!
+jitc_llvm_init(): LLVM API initialization failed ..
+
+[bench] mitsuba -m llvm_ad_rgb -o output/_bench/mitsuba_llvm_cornell_box_t40_r1_run0.exr scenes/cornell_box.xml -D spp=16 -t 40
+[bench]   wall=223 render=nan exit=248
+jit_find_library(): Unable to load "/opt/intel/oneapi/intelpython/python3.9/lib/libLLVM-11.so": /opt/intel/oneapi/intelpython/python3.9/lib/libLLVM-11.so: cannot open shared object file: No such file or directory!
+jitc_llvm_init(): LLVM API initialization failed ..
+
+[bench] mitsuba -m llvm_ad_rgb -o output/_bench/mitsuba_llvm_cornell_box_t40_r1_run1.exr scenes/cornell_box.xml -D spp=16 -t 40
+[bench]   wall=227 render=nan exit=248
+jit_find_library(): Unable to load "/opt/intel/oneapi/intelpython/python3.9/lib/libLLVM-11.so": /opt/intel/oneapi/intelpython/python3.9/lib/libLLVM-11.so: cannot open shared object file: No such file or directory!
+jitc_llvm_init(): LLVM API initialization failed ..
+
+[bench] mitsuba -m llvm_ad_rgb -o output/_bench/mitsuba_llvm_cornell_box_t40_r1_run2.exr scenes/cornell_box.xml -D spp=16 -t 40
+[bench]   wall=227 render=nan exit=248
+jit_find_library(): Unable to load "/opt/intel/oneapi/intelpython/python3.9/lib/libLLVM-11.so": /opt/intel/oneapi/intelpython/python3.9/lib/libLLVM-11.so: cannot open shared object file: No such file or directory!
+jitc_llvm_init(): LLVM API initialization failed ..
+
+[bench] mitsuba -m llvm_ad_rgb -o output/_bench/mitsuba_llvm_cornell_box_t40_r1_run0.exr scenes/cornell_box.xml -D spp=64 -t 40
+[bench]   wall=232 render=nan exit=248
+jit_find_library(): Unable to load "/opt/intel/oneapi/intelpython/python3.9/lib/libLLVM-11.so": /opt/intel/oneapi/intelpython/python3.9/lib/libLLVM-11.so: cannot open shared object file: No such file or directory!
+jitc_llvm_init(): LLVM API initialization failed ..
+
+[bench] mitsuba -m llvm_ad_rgb -o output/_bench/mitsuba_llvm_cornell_box_t40_r1_run1.exr scenes/cornell_box.xml -D spp=64 -t 40
+[bench]   wall=224 render=nan exit=248
+jit_find_library(): Unable to load "/opt/intel/oneapi/intelpython/python3.9/lib/libLLVM-11.so": /opt/intel/oneapi/intelpython/python3.9/lib/libLLVM-11.so: cannot open shared object file: No such file or directory!
+jitc_llvm_init(): LLVM API initialization failed ..
+
+[bench] mitsuba -m llvm_ad_rgb -o output/_bench/mitsuba_llvm_cornell_box_t40_r1_run2.exr scenes/cornell_box.xml -D spp=64 -t 40
+[bench]   wall=226 render=nan exit=248
+jit_find_library(): Unable to load "/opt/intel/oneapi/intelpython/python3.9/lib/libLLVM-11.so": /opt/intel/oneapi/intelpython/python3.9/lib/libLLVM-11.so: cannot open shared object file: No such file or directory!
+jitc_llvm_init(): LLVM API initialization failed ..
+
+[bench] mitsuba -m llvm_ad_rgb -o output/_bench/mitsuba_llvm_cornell_box_t40_r1_run0.exr scenes/cornell_box.xml -D spp=256 -t 40
+[bench]   wall=225 render=nan exit=248
+jit_find_library(): Unable to load "/opt/intel/oneapi/intelpython/python3.9/lib/libLLVM-11.so": /opt/intel/oneapi/intelpython/python3.9/lib/libLLVM-11.so: cannot open shared object file: No such file or directory!
+jitc_llvm_init(): LLVM API initialization failed ..
+
+[bench] mitsuba -m llvm_ad_rgb -o output/_bench/mitsuba_llvm_cornell_box_t40_r1_run1.exr scenes/cornell_box.xml -D spp=256 -t 40
+[bench]   wall=221 render=nan exit=248
+jit_find_library(): Unable to load "/opt/intel/oneapi/intelpython/python3.9/lib/libLLVM-11.so": /opt/intel/oneapi/intelpython/python3.9/lib/libLLVM-11.so: cannot open shared object file: No such file or directory!
+jitc_llvm_init(): LLVM API initialization failed ..
+
+[bench] mitsuba -m llvm_ad_rgb -o output/_bench/mitsuba_llvm_cornell_box_t40_r1_run2.exr scenes/cornell_box.xml -D spp=256 -t 40
+[bench]   wall=219 render=nan exit=248
+jit_find_library(): Unable to load "/opt/intel/oneapi/intelpython/python3.9/lib/libLLVM-11.so": /opt/intel/oneapi/intelpython/python3.9/lib/libLLVM-11.so: cannot open shared object file: No such file or directory!
+jitc_llvm_init(): LLVM API initialization failed ..
+
+[bench] mitsuba -m llvm_ad_rgb -o output/_bench/mitsuba_llvm_cornell_box_t40_r1_run0.exr scenes/cornell_box.xml -D spp=1024 -t 40
+[bench]   wall=223 render=nan exit=248
+jit_find_library(): Unable to load "/opt/intel/oneapi/intelpython/python3.9/lib/libLLVM-11.so": /opt/intel/oneapi/intelpython/python3.9/lib/libLLVM-11.so: cannot open shared object file: No such file or directory!
+jitc_llvm_init(): LLVM API initialization failed ..
+
+[bench] mitsuba -m llvm_ad_rgb -o output/_bench/mitsuba_llvm_cornell_box_t40_r1_run1.exr scenes/cornell_box.xml -D spp=1024 -t 40
+[bench]   wall=223 render=nan exit=248
+jit_find_library(): Unable to load "/opt/intel/oneapi/intelpython/python3.9/lib/libLLVM-11.so": /opt/intel/oneapi/intelpython/python3.9/lib/libLLVM-11.so: cannot open shared object file: No such file or directory!
+jitc_llvm_init(): LLVM API initialization failed ..
+
+[bench] mitsuba -m llvm_ad_rgb -o output/_bench/mitsuba_llvm_cornell_box_t40_r1_run2.exr scenes/cornell_box.xml -D spp=1024 -t 40
+[bench]   wall=229 render=nan exit=248
+jit_find_library(): Unable to load "/opt/intel/oneapi/intelpython/python3.9/lib/libLLVM-11.so": /opt/intel/oneapi/intelpython/python3.9/lib/libLLVM-11.so: cannot open shared object file: No such file or directory!
+jitc_llvm_init(): LLVM API initialization failed ..
+
+
+=== TIER 3.4: Ours sweep for time-to-quality (Cornell 1024², T=40) ===
+[bench] build/release/rt /tmp/cornell_1024_spp1.scene output/_bench/ours_omp_cornell_1024_spp1_t40_r1_run0.ppm
+[bench]   wall=119 render=48 exit=0
+[bench] build/release/rt /tmp/cornell_1024_spp1.scene output/_bench/ours_omp_cornell_1024_spp1_t40_r1_run1.ppm
+[bench]   wall=86 render=48 exit=0
+[bench] build/release/rt /tmp/cornell_1024_spp1.scene output/_bench/ours_omp_cornell_1024_spp1_t40_r1_run2.ppm
+[bench]   wall=91 render=79 exit=0
+[bench] build/release/rt /tmp/cornell_1024_spp4.scene output/_bench/ours_omp_cornell_1024_spp4_t40_r1_run0.ppm
+[bench]   wall=266 render=191 exit=0
+[bench] build/release/rt /tmp/cornell_1024_spp4.scene output/_bench/ours_omp_cornell_1024_spp4_t40_r1_run1.ppm
+[bench]   wall=182 render=169 exit=0
+[bench] build/release/rt /tmp/cornell_1024_spp4.scene output/_bench/ours_omp_cornell_1024_spp4_t40_r1_run2.ppm
+[bench]   wall=182 render=160 exit=0
+[bench] build/release/rt /tmp/cornell_1024_spp16.scene output/_bench/ours_omp_cornell_1024_spp16_t40_r1_run0.ppm
+[bench]   wall=1019 render=1006 exit=0
+[bench] build/release/rt /tmp/cornell_1024_spp16.scene output/_bench/ours_omp_cornell_1024_spp16_t40_r1_run1.ppm
+[bench]   wall=629 render=616 exit=0
+[bench] build/release/rt /tmp/cornell_1024_spp16.scene output/_bench/ours_omp_cornell_1024_spp16_t40_r1_run2.ppm
+[bench]   wall=784 render=737 exit=0
+[bench] build/release/rt /tmp/cornell_1024_spp64.scene output/_bench/ours_omp_cornell_1024_spp64_t40_r1_run0.ppm
+[bench]   wall=2428 render=2414 exit=0
+[bench] build/release/rt /tmp/cornell_1024_spp64.scene output/_bench/ours_omp_cornell_1024_spp64_t40_r1_run1.ppm
+[bench]   wall=2553 render=2541 exit=0
+[bench] build/release/rt /tmp/cornell_1024_spp64.scene output/_bench/ours_omp_cornell_1024_spp64_t40_r1_run2.ppm
+[bench]   wall=2476 render=2421 exit=0
+[bench] build/release/rt /tmp/cornell_1024_spp256.scene output/_bench/ours_omp_cornell_1024_spp256_t40_r1_run0.ppm
+[bench]   wall=9768 render=9754 exit=0
+[bench] build/release/rt /tmp/cornell_1024_spp256.scene output/_bench/ours_omp_cornell_1024_spp256_t40_r1_run1.ppm
+[bench]   wall=9689 render=9612 exit=0
+[bench] build/release/rt /tmp/cornell_1024_spp256.scene output/_bench/ours_omp_cornell_1024_spp256_t40_r1_run2.ppm
+[bench]   wall=9616 render=9603 exit=0
+[bench] build/release/rt /tmp/cornell_1024_spp1024.scene output/_bench/ours_omp_cornell_1024_spp1024_t40_r1_run0.ppm
+[bench]   wall=38363 render=38338 exit=0
+[bench] build/release/rt /tmp/cornell_1024_spp1024.scene output/_bench/ours_omp_cornell_1024_spp1024_t40_r1_run1.ppm
+[bench]   wall=38362 render=38318 exit=0
+[bench] build/release/rt /tmp/cornell_1024_spp1024.scene output/_bench/ours_omp_cornell_1024_spp1024_t40_r1_run2.ppm
+[bench]   wall=38694 render=38678 exit=0
+
+=== AGGREGATING RESULTS ===
+Finished: Wed May  6 19:04:17 IST 2026
+Results: results/20260506_141945/
+total 296
+drwxr-xr-x 2 cs24s009 ms 33280 May  6 19:04 .
+drwxr-xr-x 3 cs24s009 ms 33280 May  6 14:19 ..
+-rw-r--r-- 1 cs24s009 ms 79467 May  6 19:04 run.log
+-rw-r--r-- 1 cs24s009 ms 11929 May  6 19:04 summary.csv
+-rw-r--r-- 1 cs24s009 ms 58343 May  6 19:04 timings.csv
+-rw-r--r-- 1 cs24s009 ms 58343 May  6 19:04 timings.csv.bak

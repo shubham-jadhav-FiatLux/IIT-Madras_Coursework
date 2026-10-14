@@ -1,0 +1,135 @@
+# Cornell Box for pbrt-v4  — mm scale, matches our cornell_box.scene exactly.
+# Camera, light, box positions, albedos, and emission are identical.
+# Walls as triangle meshes (same room bounds as our clipped planes).
+# Output: linear HDR EXR; Reinhard+gamma applied externally for fair comparison.
+#
+# Usage: pbrt --nthreads N scenes/cornell_box_pbrt.pbrt
+# spp is set by the Sampler; override with --spp if needed (pbrt-v4 doesn't
+# support that flag directly — edit "pixelsamples" below).
+
+Film "rgb"
+    "integer xresolution" [ 512 ]
+    "integer yresolution" [ 512 ]
+    "string filename"     [ "output/pbrt_cornell.exr" ]
+
+LookAt 278 273 -800   278 273 0   0 1 0
+
+Camera "perspective"
+    "float fov" [ 39.3 ]
+
+Sampler "zsobol"
+    "integer pixelsamples" [ 64 ]
+
+Integrator "path"
+    "integer maxdepth"  [ 8 ]
+
+WorldBegin
+
+# ── Materials ──────────────────────────────────────────────────────────────────
+MakeNamedMaterial "white"
+    "string type"       [ "diffuse" ]
+    "rgb reflectance"   [ 0.73 0.73 0.73 ]
+
+MakeNamedMaterial "red"
+    "string type"       [ "diffuse" ]
+    "rgb reflectance"   [ 0.65 0.05 0.05 ]
+
+MakeNamedMaterial "green"
+    "string type"       [ "diffuse" ]
+    "rgb reflectance"   [ 0.12 0.45 0.15 ]
+
+MakeNamedMaterial "light_mat"
+    "string type"       [ "diffuse" ]
+    "rgb reflectance"   [ 1.0 1.0 1.0 ]
+
+# ── Floor  (y = 0, normal +y) ─────────────────────────────────────────────────
+NamedMaterial "white"
+Shape "trianglemesh"
+    "point3 P"       [   0 0   0   556 0   0   556 0 559     0 0 559 ]
+    "integer indices" [ 0 2 1   0 3 2 ]
+
+# ── Ceiling (y = 549, normal -y) ──────────────────────────────────────────────
+NamedMaterial "white"
+Shape "trianglemesh"
+    "point3 P"       [   0 549   0   556 549   0   556 549 559     0 549 559 ]
+    "integer indices" [ 0 1 2   0 2 3 ]
+
+# ── Back wall (z = 559, normal -z) ────────────────────────────────────────────
+NamedMaterial "white"
+Shape "trianglemesh"
+    "point3 P"       [   0 0 559   556 0 559   556 549 559     0 549 559 ]
+    "integer indices" [ 0 2 1   0 3 2 ]
+
+# ── Green wall (x = 0, normal +x) ─────────────────────────────────────────────
+NamedMaterial "green"
+Shape "trianglemesh"
+    "point3 P"       [ 0   0   0   0   0 559   0 549 559   0 549   0 ]
+    "integer indices" [ 0 2 1   0 3 2 ]
+
+# ── Red wall   (x = 556, normal -x) ───────────────────────────────────────────
+NamedMaterial "red"
+Shape "trianglemesh"
+    "point3 P"       [ 556   0   0   556 549   0   556 549 559   556   0 559 ]
+    "integer indices" [ 0 2 1   0 3 2 ]
+
+# ── Ceiling light (y = 548, emits downward, normal -y) ────────────────────────
+# Area: 130 × 105 mm = 13650 mm² — matches our area_light exactly.
+AttributeBegin
+    NamedMaterial "light_mat"
+    AreaLightSource "diffuse"
+        "rgb L" [ 18.387 13.9873 6.75357 ]
+    Shape "trianglemesh"
+        "point3 P"       [ 213 548 227   343 548 227   343 548 332   213 548 332 ]
+        "integer indices" [ 0 1 2   0 2 3 ]
+AttributeEnd
+
+# ── Tall box  x=[286,451] y=[0,330] z=[274,439]  (red-wall side, back) ────────
+AttributeBegin
+    NamedMaterial "white"
+    # Top face (y=330, normal +y)
+    Shape "trianglemesh"
+        "point3 P" [ 286 330 274   451 330 274   451 330 439   286 330 439 ]
+        "integer indices" [ 0 2 1   0 3 2 ]
+    # Front face (z=274, normal -z)
+    Shape "trianglemesh"
+        "point3 P" [ 286   0 274   451   0 274   451 330 274   286 330 274 ]
+        "integer indices" [ 0 2 1   0 3 2 ]
+    # Back face (z=439, normal +z)
+    Shape "trianglemesh"
+        "point3 P" [ 286   0 439   451   0 439   451 330 439   286 330 439 ]
+        "integer indices" [ 0 1 2   0 2 3 ]
+    # Left face (x=286, normal -x)
+    Shape "trianglemesh"
+        "point3 P" [ 286   0 274   286   0 439   286 330 439   286 330 274 ]
+        "integer indices" [ 0 1 2   0 2 3 ]
+    # Right face (x=451, normal +x)
+    Shape "trianglemesh"
+        "point3 P" [ 451   0 274   451   0 439   451 330 439   451 330 274 ]
+        "integer indices" [ 0 2 1   0 3 2 ]
+AttributeEnd
+
+# ── Short box x=[103,268] y=[0,165] z=[86,252]  (green-wall side, front) ──────
+AttributeBegin
+    NamedMaterial "white"
+    # Top face (y=165, normal +y)
+    Shape "trianglemesh"
+        "point3 P" [ 103 165  86   268 165  86   268 165 252   103 165 252 ]
+        "integer indices" [ 0 2 1   0 3 2 ]
+    # Front face (z=86, normal -z)
+    Shape "trianglemesh"
+        "point3 P" [ 103   0  86   268   0  86   268 165  86   103 165  86 ]
+        "integer indices" [ 0 2 1   0 3 2 ]
+    # Back face (z=252, normal +z)
+    Shape "trianglemesh"
+        "point3 P" [ 103   0 252   268   0 252   268 165 252   103 165 252 ]
+        "integer indices" [ 0 1 2   0 2 3 ]
+    # Left face (x=103, normal -x)
+    Shape "trianglemesh"
+        "point3 P" [ 103   0  86   103   0 252   103 165 252   103 165  86 ]
+        "integer indices" [ 0 1 2   0 2 3 ]
+    # Right face (x=268, normal +x)
+    Shape "trianglemesh"
+        "point3 P" [ 268   0  86   268   0 252   268 165 252   268 165  86 ]
+        "integer indices" [ 0 2 1   0 3 2 ]
+AttributeEnd
+

@@ -1,0 +1,35 @@
+# Cornell Box — approximate canonical dimensions (mm scale).
+# Camera outside room looking in; back wall at z=559, open front at z=0.
+# Area light is a parallelogram for NEE sampling; the box below makes it
+# visible to the camera. Interior boxes are axis-aligned approximations
+# (originals are rotated 15° / -17°).
+
+image 512 512
+camera pos 278 273 -800 lookat 278 273 0 up 0 1 0 vfov 39.3
+background 0 0 0
+max_depth 8
+integrator path_trace
+spp 1024
+
+material white  albedo 0.73 0.73 0.73
+material red    albedo 0.65 0.05 0.05
+material green  albedo 0.12 0.45 0.15
+material light  albedo 1.0 1.0 1.0  emission 18.387 13.9873 6.75357
+
+# Room walls — clipped to room bounds to prevent out-of-room bounces off infinite planes
+plane point   0   0   0  normal  0  1  0  material white  clip   0 -1e9   0 556  1e9 559
+plane point   0 549   0  normal  0 -1  0  material white  clip   0 -1e9   0 556  1e9 559
+plane point   0   0 559  normal  0  0 -1  material white  clip   0    0 -1e9 556  549 1e9
+plane point   0   0   0  normal  1  0  0  material green  clip -1e9    0   0 1e9  549 559
+plane point 556   0   0  normal -1  0  0  material red    clip -1e9    0   0 1e9  549 559
+
+# Ceiling light — visible box + NEE parallelogram at y=548 (below ceiling plane)
+box min 213 548 227 max 343 549 332 material light
+area_light corner 213 548 227 u 130 0 0 v 0 0 105 emission 18.387 13.9873 6.75357
+
+# Interior boxes — axis-aligned approximations of Cornell CS vertex data.
+# Tall box:  Cornell centroid x=368.5 (red-wall side), z=351 (back), height=330
+# Short box: Cornell centroid x=185   (green-wall side), z=168.5 (front), height=165
+# Originals are rotated (tall +15°, short -17°); rotation requires transform support.
+box min 286   0 274 max 451 330 439 material white   # tall:  red-wall side, back,  h=330
+box min 103   0  86 max 268 165 252 material white   # short: green-wall side, front, h=165

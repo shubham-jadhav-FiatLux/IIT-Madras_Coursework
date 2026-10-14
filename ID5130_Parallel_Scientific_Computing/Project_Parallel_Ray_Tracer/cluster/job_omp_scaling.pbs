@@ -1,0 +1,107 @@
+#!/bin/bash
+#PBS -N rt_omp_scaling
+#PBS -q medium
+#PBS -l select=1:ncpus=40
+#PBS -l walltime=03:00:00
+#PBS -l place=excl
+#PBS -j oe
+#PBS -o rt_omp_scaling.log
+# Single node, 40 physical cores (Xeon Gold 6248: 2 sockets × 20 cores)
+# place=excl: exclusive node — no other jobs on this node, eliminates the
+# noisy-neighbour artifact that produced the unphysical T=20→T=40 jump in §14.
+
+# -----------------------------------------------------------------------
+# Single-node OpenMP strong-scaling benchmark
+# Tests: Whitted + Path Trace at 1, 2, 4, 8, 10, 20, 40 threads
+#        Also 80 (HT) for comparison
+#        Standard and Adaptive decomposition for Whitted
+# Output: rt_omp_scaling.log (merged stdout+stderr)
+# -----------------------------------------------------------------------
+
+set -e
+cd "$PBS_O_WORKDIR"
+
+RT=./build/release/rt
+mkdir -p output
+
+# 256-SPP scene for scaling tests (faster than 1024, keeps wall time <3h)
+sed 's/^spp 1024/spp 256/' scenes/cornell_box.scene > /tmp/cornell_256.scene
+
+export OMP_PLACES=cores
+export OMP_PROC_BIND=close
+
+echo "=== OMP SCALING BENCHMARK ==="
+echo "Node: $(hostname)  Date: $(date)"
+echo "CPU:  $(lscpu | grep 'Model name' | sed 's/.*: *//')"
+echo ""
+
+# -----------------------------------------------------------------------
+# 1. Whitted — standard vs adaptive, thread scaling
+# -----------------------------------------------------------------------
+echo "=== WHITTED STANDARD ==="
+for T in 1 2 4 8 10 20 40 80; do
+    for R in 1 2 3; do
+        OUT=$(OMP_NUM_THREADS=$T $RT scenes/whitted_showcase.scene /dev/null 2>&1)
+        MS=$(echo "$OUT" | awk '/render/{for(i=1;i<=NF;i++) if($i=="render") print $(i+1)}')
+        echo "WHITTED_STD T=$T R=$R ms=$MS"
+    done
+done
+
+echo ""
+echo "=== WHITTED ADAPTIVE ==="
+for T in 1 2 4 8 10 20 40 80; do
+    for R in 1 2 3; do
+        OUT=$(OMP_NUM_THREADS=$T $RT scenes/whitted_showcase.scene /dev/null --adaptive 2>&1)
+        MS=$(echo "$OUT" | awk '/render/{for(i=1;i<=NF;i++) if($i=="render") print $(i+1)}')
+        echo "WHITTED_ADAPTIVE T=$T R=$R ms=$MS"
+    done
+done
+
+# -----------------------------------------------------------------------
+# 2. Path Trace — 256 SPP, thread scaling
+# -----------------------------------------------------------------------
+echo ""
+echo "=== PATH TRACE 256 SPP ==="
+for T in 1 2 4 8 10 20 40 80; do
+    RUNS=3
+    [ "$T" = "1" ] && RUNS=2
+    for R in $(seq 1 $RUNS); do
+        OUT=$(OMP_NUM_THREADS=$T $RT /tmp/cornell_256.scene /dev/null 2>&1)
+        MS=$(echo "$OUT" | awk '/render/{for(i=1;i<=NF;i++) if($i=="render") print $(i+1)}')
+        SPS=$(awk -v ms="$MS" 'BEGIN{printf "%.3f", 512*512*256/ms/1000}')
+        echo "PT256 T=$T R=$R ms=$MS sps=$SPS"
+    done
+done
+
+# -----------------------------------------------------------------------
+# 3. Path Trace — 1024 SPP, 40 physical cores (paper's primary number)
+# -----------------------------------------------------------------------
+echo ""
+echo "=== PATH TRACE 1024 SPP (40 physical cores) ==="
+for R in 1 2; do
+    OUT=$(OMP_NUM_THREADS=40 $RT scenes/cornell_box.scene /dev/null 2>&1)
+    MS=$(echo "$OUT" | awk '/render/{for(i=1;i<=NF;i++) if($i=="render") print $(i+1)}')
+    SPS=$(awk -v ms="$MS" 'BEGIN{printf "%.3f", 512*512*1024/ms/1000}')
+    echo "PT1024 T=40 R=$R ms=$MS sps=$SPS"
+done
+
+# -----------------------------------------------------------------------
+# 4. Correctness: bit-identity across thread counts
+# -----------------------------------------------------------------------
+echo ""
+echo "=== CORRECTNESS CHECK ==="
+OMP_NUM_THREADS=1  $RT scenes/whitted_showcase.scene output/aqua_whitted_t1.ppm  2>/dev/null
+OMP_NUM_THREADS=40 $RT scenes/whitted_showcase.scene output/aqua_whitted_t40.ppm 2>/dev/null
+H1=$(md5sum output/aqua_whitted_t1.ppm  | awk '{print $1}')
+H2=$(md5sum output/aqua_whitted_t40.ppm | awk '{print $1}')
+[ "$H1" = "$H2" ] && echo "Whitted t1==t40: OK ($H1)" || echo "MISMATCH: $H1 vs $H2"
+
+OMP_NUM_THREADS=1  $RT /tmp/cornell_256.scene output/aqua_pt_t1.ppm  2>/dev/null
+OMP_NUM_THREADS=40 $RT /tmp/cornell_256.scene output/aqua_pt_t40.ppm 2>/dev/null
+H1=$(md5sum output/aqua_pt_t1.ppm  | awk '{print $1}')
+H2=$(md5sum output/aqua_pt_t40.ppm | awk '{print $1}')
+[ "$H1" = "$H2" ] && echo "PathTrace t1==t40: OK ($H1)" || echo "MISMATCH: $H1 vs $H2"
+
+echo ""
+echo "=== DONE ==="
+echo "Finished: $(date)"

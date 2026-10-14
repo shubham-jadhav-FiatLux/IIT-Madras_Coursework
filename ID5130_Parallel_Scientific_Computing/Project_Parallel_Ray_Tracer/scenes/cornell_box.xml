@@ -1,0 +1,144 @@
+<!-- Cornell Box for Mitsuba 3 — matches our cornell_box.scene exactly.
+     Same camera, same wall positions, same materials, same area-light radiance.
+     Geometry expressed as `rectangle` shapes (Mitsuba's unit XY rectangle is
+     [-1,1] × [-1,1] × {0} with normal +Z; we transform to position).
+
+     Render at 1024 spp:    mitsuba scenes/cornell_box.xml -o output/mi.exr
+     Override spp:          mitsuba scenes/cornell_box.xml -D spp=8192
+     Variants tested:       scalar_rgb, llvm_ad_rgb (`mitsuba -m <variant>`).
+     Resolution override:   -D width=1024 -D height=1024
+-->
+<scene version="3.0.0">
+
+    <default name="spp"    value="1024"/>
+    <default name="width"  value="512"/>
+    <default name="height" value="512"/>
+    <default name="depth"  value="8"/>
+
+    <integrator type="path">
+        <integer name="max_depth" value="$depth"/>
+    </integrator>
+
+    <sensor type="perspective">
+        <transform name="to_world">
+            <lookat origin="278, 273, -800"
+                    target="278, 273,    0"
+                    up    ="  0,   1,    0"/>
+        </transform>
+        <float   name="fov"      value="39.3"/>
+        <string  name="fov_axis" value="y"/>
+        <sampler type="independent">
+            <integer name="sample_count" value="$spp"/>
+        </sampler>
+        <film type="hdrfilm">
+            <integer name="width"  value="$width"/>
+            <integer name="height" value="$height"/>
+            <rfilter type="box"/>     <!-- match our point sampling -->
+            <string  name="pixel_format" value="rgb"/>
+            <string  name="component_format" value="float32"/>
+        </film>
+    </sensor>
+
+    <!-- Materials — exact albedo values from cornell_box.scene -->
+    <bsdf type="twosided" id="white">
+        <bsdf type="diffuse">
+            <rgb name="reflectance" value="0.73, 0.73, 0.73"/>
+        </bsdf>
+    </bsdf>
+    <bsdf type="twosided" id="red">
+        <bsdf type="diffuse">
+            <rgb name="reflectance" value="0.65, 0.05, 0.05"/>
+        </bsdf>
+    </bsdf>
+    <bsdf type="twosided" id="green">
+        <bsdf type="diffuse">
+            <rgb name="reflectance" value="0.12, 0.45, 0.15"/>
+        </bsdf>
+    </bsdf>
+
+    <!-- Floor: y=0, normal +y. Rectangle is XY plane → rotate -90 around X. -->
+    <shape type="rectangle">
+        <transform name="to_world">
+            <scale     x="278"        y="279.5"/>
+            <rotate    x="1" angle="-90"/>
+            <translate x="278" y="0"  z="279.5"/>
+        </transform>
+        <ref id="white"/>
+    </shape>
+
+    <!-- Ceiling: y=549, normal -y. Rectangle XY → rotate +90 around X. -->
+    <shape type="rectangle">
+        <transform name="to_world">
+            <scale     x="278"        y="279.5"/>
+            <rotate    x="1" angle="90"/>
+            <translate x="278" y="549" z="279.5"/>
+        </transform>
+        <ref id="white"/>
+    </shape>
+
+    <!-- Back wall: z=559, normal -z. Rectangle XY (normal +Z) → rotate 180. -->
+    <shape type="rectangle">
+        <transform name="to_world">
+            <scale     x="278"        y="274.5"/>
+            <rotate    y="1" angle="180"/>
+            <translate x="278" y="274.5" z="559"/>
+        </transform>
+        <ref id="white"/>
+    </shape>
+
+    <!-- Green wall: x=0, normal +x. Rectangle XY → rotate +90 around Y. -->
+    <shape type="rectangle">
+        <transform name="to_world">
+            <scale  y="274.5"     z="279.5"/>
+            <rotate y="1" angle="90"/>
+            <translate x="0" y="274.5" z="279.5"/>
+        </transform>
+        <ref id="green"/>
+    </shape>
+
+    <!-- Red wall: x=556, normal -x. Rectangle XY → rotate -90 around Y. -->
+    <shape type="rectangle">
+        <transform name="to_world">
+            <scale  y="274.5"     z="279.5"/>
+            <rotate y="1" angle="-90"/>
+            <translate x="556" y="274.5" z="279.5"/>
+        </transform>
+        <ref id="red"/>
+    </shape>
+
+    <!-- Tall box: x=[286,451] y=[0,330] z=[274,439]
+         Center (368.5, 165, 356.5), half-size (82.5, 165, 82.5).
+         Mitsuba `cube` is [-1,1]³ with normals outward. -->
+    <shape type="cube">
+        <transform name="to_world">
+            <scale     x="82.5"   y="165"   z="82.5"/>
+            <translate x="368.5"  y="165"   z="356.5"/>
+        </transform>
+        <ref id="white"/>
+    </shape>
+
+    <!-- Short box: x=[103,268] y=[0,165] z=[86,252]
+         Center (185.5, 82.5, 169), half-size (82.5, 82.5, 83). -->
+    <shape type="cube">
+        <transform name="to_world">
+            <scale     x="82.5"   y="82.5"  z="83"/>
+            <translate x="185.5"  y="82.5"  z="169"/>
+        </transform>
+        <ref id="white"/>
+    </shape>
+
+    <!-- Ceiling area light: corner (213, 548, 227), u=(130,0,0), v=(0,0,105).
+         Center (278, 548, 279.5), half-size (65, 0, 52.5), normal -y.
+         Radiance matches our scene exactly (18.387, 13.9873, 6.75357). -->
+    <shape type="rectangle">
+        <transform name="to_world">
+            <scale     x="65"          y="52.5"/>
+            <rotate    x="1" angle="90"/>
+            <translate x="278" y="548" z="279.5"/>
+        </transform>
+        <emitter type="area">
+            <rgb name="radiance" value="18.387, 13.9873, 6.75357"/>
+        </emitter>
+    </shape>
+
+</scene>

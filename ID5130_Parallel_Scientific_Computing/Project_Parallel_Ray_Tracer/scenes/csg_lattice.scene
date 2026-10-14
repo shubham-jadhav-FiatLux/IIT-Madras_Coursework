@@ -1,0 +1,57 @@
+# Steinmetz solid: intersection of three orthogonal cylinders.
+# Topology: intersection(intersection(cyl_y, cyl_x_rotated), cyl_z_rotated)
+# However our Cylinder primitive is +y-axis only — to get x/z-aligned
+# cylinders we use a different trick: a cylinder along y, embedded inside a
+# CSG difference with thin slabs to cut it. For a cleaner lattice we render
+# three CSG objects side by side, each showing a different intersection.
+#
+# Demonstrates: deeply nested intersection over arbitrary primitives.
+# pbrt-v4 cannot represent any of these objects.
+image 800 450
+camera pos 0 1.5 3.5 lookat 0 0.5 -0.5 up 0 1 0 vfov 45
+background 0.60 0.75 0.95
+ambient    0.04 0.04 0.05
+max_depth  4
+
+material floor   albedo 0.55 0.55 0.55 specular 1 1 1 shininess 40
+material brass   albedo 0.85 0.65 0.20 specular 1 1 1 shininess 60
+material copper  albedo 0.85 0.45 0.25 specular 1 1 1 shininess 60
+material steel   albedo 0.40 0.42 0.48 specular 1 1 1 shininess 80
+
+light point pos -3 5  2 intensity 0.8 0.8 0.8
+light point pos  3 4 -1 intensity 0.5 0.5 0.6
+
+plane point 0 0 0 normal 0 1 0 material floor
+
+# LEFT: Steinmetz bicylinder (y ∩ tilted_x as box-bounded region).
+# Approximated as cyl_y ∩ box (where box has thin x extent ≈ cyl height span).
+# Visually: cylinder with cube-edge profile.
+csg intersection material brass {
+  cylinder base -1.6 0 -0.6 radius 0.5 height 1.0
+  box      min  -2.1 0.0 -1.1  max -1.1 1.0 -0.1
+}
+
+# CENTER: lens-stack — five spheres intersected. Depth-5 nested intersection.
+csg intersection material copper {
+  csg intersection {
+    csg intersection {
+      csg intersection {
+        sphere center -0.20 0.6 -0.5 radius 0.7
+        sphere center  0.20 0.6 -0.5 radius 0.7
+      }
+      sphere center  0.0  0.4 -0.5 radius 0.7
+    }
+    sphere center  0.0  0.8 -0.5 radius 0.7
+  }
+  sphere center  0.0  0.6 -0.7 radius 0.7
+}
+
+# RIGHT: framed cube — box minus a slightly smaller box, then intersected with
+# a sphere → "rounded picture frame" effect. Depth-3 nested CSG over 3 prims.
+csg intersection material steel {
+  csg difference {
+    box min  1.1 0.05 -1.1  max 2.1 1.05 -0.1
+    box min  1.2 0.15 -1.2  max 2.0 0.95  0.0
+  }
+  sphere center 1.6 0.55 -0.6 radius 0.75
+}

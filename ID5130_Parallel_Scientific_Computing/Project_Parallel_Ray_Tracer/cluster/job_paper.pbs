@@ -1,0 +1,267 @@
+#!/bin/bash
+#PBS -N rt_paper
+#PBS -q medium
+#PBS -l select=4:ncpus=40:mpiprocs=40:ompthreads=1
+#PBS -l walltime=48:00:00
+#PBS -l place=excl
+#PBS -j oe
+#PBS -o rt_paper.log
+#PBS -m abe
+#PBS -M <your-email>
+# ============================================================================
+# Master benchmark job for the publication. Single end-to-end run that
+# reproduces every measurement in the paper.
+#
+# Resource:  4 nodes × 40 physical cores (Xeon Gold 6248, 2 sockets × 20)
+# Walltime:  48h (real ~14–18 h on healthy queue)
+# Place:     exclusive — no co-tenants
+#
+# Tiers:
+#   1.1  Mitsuba 8192-SPP ground truth (for RMSE/SSIM/FLIP)
+#   1.2  OMP path-trace strong scaling — Cornell 1024² 256 SPP
+#   1.3  OMP path-trace headline       — Cornell 1024² 1024 SPP
+#   1.4  Pure-MPI strong scaling       — 1 thread/rank, np ∈ {1..160}
+#   1.5  Adaptive LPT vs static        — single-node T=40 + dual-rank np=2 t=20
+#   2.1  Whitted strong scaling        — 1280×720 with adaptive variants
+#   2.2  Adaptive on CSG-heavy scenes  — Swiss-cheese / lattice / Menger
+#   2.3  Hybrid MPI+OMP sweep          — 9 rank/thread splits (1 + 2 nodes)
+#   2.4  Weak scaling                  — image area ∝ N
+#   2.5  CSG-only benchmark            — pbrt cannot represent these scenes
+#   3.1  pbrt-v4 sweep                 — auto-skipped if pbrt not on PATH
+#   3.2  Mitsuba scalar sweep
+#   3.3  Mitsuba LLVM sweep
+#   3.4  Time-to-quality sweep         — ours, varying SPP
+#
+# Defensive design (lessons learned over multiple submissions on AQUA):
+#   * Writes ALL output to /tmp/$USER_rtpaper_$JOBID/ during execution.
+#     /lfs has shown coherence races on long-running jobs (file/dir vanishing
+#     mid-write). /tmp is node-local on the head compute node and safe.
+#   * Atomic copy from /tmp to results/<TS>/ at the very end, after the
+#     aggregator has run. If the copy fails, data is still preserved on /tmp.
+#   * Hard correctness gate up front (make test, OMP/MPI bit-identity).
+#   * Each bench is wrapped to never kill the job — failures recorded in CSV
+#     with non-zero exit_code; downstream merge filters them out.
+# ============================================================================
+
+set -o pipefail
+cd "$PBS_O_WORKDIR" || { echo "FATAL: cannot cd to PBS_O_WORKDIR=$PBS_O_WORKDIR"; exit 2; }
+echo "[boot] pwd=$(pwd) host=$(hostname) date=$(date) shell=$BASH_VERSION"
+
+if [ ! -f cluster/aqua_env.sh ]; then
+    echo "FATAL: cluster/aqua_env.sh not found at $(pwd)"; ls -la cluster/ | head; exit 2
+fi
+source cluster/aqua_env.sh
+echo "[boot] env sourced; DRJIT_LIBLLVM_PATH=$DRJIT_LIBLLVM_PATH"
+
+if ! rt_env_check; then
+    echo "FATAL: rt_env_check failed; aborting before any benchmark runs"; exit 2
+fi
+echo "[boot] rt_env_check OK"
+
+# ----------------------------------------------------------------------------
+# Correctness gate — fail fast (under 5 min) if anything is broken.
+# ----------------------------------------------------------------------------
+echo "" ; echo "=== CORRECTNESS GATE ==="
+echo "Toolchain: $(g++ --version | head -1) | $(mpicxx --version | head -1)"
+echo "Mitsuba:   $(python3 -c 'import mitsuba; print(mitsuba.__version__)' 2>&1)"
+
+[ -x build/release/rt ]     || { echo "FATAL: build/release/rt missing";     ls -la build/release/; exit 2; }
+[ -x build/release/rt_mpi ] || { echo "FATAL: build/release/rt_mpi missing"; ls -la build/release/; exit 2; }
+
+if ! make test MODE=release > /tmp/_g_test.log 2>&1; then
+    echo "FATAL: make test failed"; tail -20 /tmp/_g_test.log; exit 2
+fi
+echo "make test: OK"
+
+if ! OMP_NUM_THREADS=1  ./build/release/rt scenes/whitted_showcase.scene /tmp/_g_t1.ppm  >/dev/null 2>&1 \
+   || ! OMP_NUM_THREADS=40 ./build/release/rt scenes/whitted_showcase.scene /tmp/_g_t40.ppm >/dev/null 2>&1; then
+    echo "FATAL: Whitted serial render failed"; exit 2
+fi
+H1=$(md5sum /tmp/_g_t1.ppm  | awk '{print $1}')
+H40=$(md5sum /tmp/_g_t40.ppm | awk '{print $1}')
+if [ "$H1" != "$H40" ]; then echo "FATAL: Whitted t1!=t40 ($H1 vs $H40)"; exit 2; fi
+echo "Whitted bit-identity (t1==t40): OK ($H1)"
+
+if ! OMP_NUM_THREADS=1 mpirun -np 4 ./build/release/rt_mpi scenes/whitted_showcase.scene /tmp/_g_mpi.ppm >/dev/null 2>&1; then
+    echo "FATAL: MPI smoke test failed"; exit 2
+fi
+HM=$(md5sum /tmp/_g_mpi.ppm | awk '{print $1}')
+if [ "$HM" != "$H1" ]; then echo "FATAL: MPI MD5 mismatch ($HM vs $H1)"; exit 2; fi
+echo "MPI bit-identity (np=4 t=1 == serial): OK"
+
+# ----------------------------------------------------------------------------
+# Switch to /tmp scratch for all run-time writes.
+# ----------------------------------------------------------------------------
+TS=$(date +%Y%m%d_%H%M%S)
+SCRATCH="/tmp/${USER}_rtpaper_${PBS_JOBID%%.*}"
+mkdir -p "$SCRATCH" || { echo "FATAL: cannot mkdir $SCRATCH"; exit 2; }
+[ -w "$SCRATCH" ]   || { echo "FATAL: $SCRATCH not writable"; exit 2; }
+
+CSV="$SCRATCH/timings.csv"
+LOG="$SCRATCH/run.log"
+: > "$LOG"
+
+export OMP_PLACES=cores
+export OMP_PROC_BIND=close
+NODES=$(sort -u "$PBS_NODEFILE" | wc -l)
+{
+    echo "==========================================="
+    echo "rt_paper $TS  on $NODES nodes"
+    echo "Hosts:   $(sort -u "$PBS_NODEFILE" | tr '\n' ' ')"
+    echo "Scratch: $SCRATCH"
+    echo "Started: $(date)"
+    echo "==========================================="
+} | tee -a "$LOG"
+lscpu | grep -E "Model name|Socket|Core\(s\)|NUMA|^CPU" | tee -a "$LOG"
+
+bench() {
+    local t0; t0=$(date +%s)
+    python3 tools/bench.py --out "$CSV" "$@" 2>>"$LOG" \
+        || echo "[bench-failed @ $(date +%H:%M:%S)] $* (after $(( $(date +%s) - t0 ))s)" | tee -a "$LOG"
+    return 0
+}
+
+# ============================================================================
+# TIER 1 — paper headline
+# ============================================================================
+echo "" | tee -a "$LOG"
+echo "=== TIER 1.1: Mitsuba 8192-SPP ground truth ===" | tee -a "$LOG"
+bench --renderer mitsuba_llvm --scene scenes/cornell_box.xml --threads 40 --spp 8192 --repeats 1
+cp -f output/_bench/mitsuba_llvm_cornell_box_t40_r1_run0.exr "$SCRATCH/gt_mitsuba_8192spp.exr" 2>/dev/null || true
+
+echo "" | tee -a "$LOG"
+echo "=== TIER 1.2: OMP path-trace strong scaling (Cornell 1024² 256 SPP) ===" | tee -a "$LOG"
+SC=scenes/cornell_box_1024_256spp.scene
+sed 's/^image 1024 1024$/image 1024 1024/; s/^spp 1024$/spp 256/' \
+    scenes/cornell_box_1024.scene > "$SC"
+for T in 1 2 4 8 16 20 40; do
+    bench --renderer ours_omp --scene "$SC" --threads $T --repeats 5
+done
+
+echo "" | tee -a "$LOG"
+echo "=== TIER 1.3: OMP headline (1024² 1024 SPP) ===" | tee -a "$LOG"
+for T in 1 40; do
+    bench --renderer ours_omp --scene scenes/cornell_box_1024.scene --threads $T --repeats 5
+done
+
+echo "" | tee -a "$LOG"
+echo "=== TIER 1.4: Pure MPI strong scaling (1 thread/rank) ===" | tee -a "$LOG"
+# Open MPI default slot-fill keeps np<=40 on node 0, spans 2 nodes at np=80, etc.
+# (no -ppn — that's Intel-MPI / mpich syntax which Open MPI rejects)
+for NRANK in 1 2 4 8 16 32 64 128 160; do
+    bench --renderer ours_mpi --scene "$SC" --ranks $NRANK --threads 1 --repeats 5
+done
+
+echo "" | tee -a "$LOG"
+echo "=== TIER 1.5: Adaptive vs static (single-node T=40 + np=2 t=20) ===" | tee -a "$LOG"
+bench --renderer ours_omp --scene "$SC" --threads 40 --repeats 5
+bench --renderer ours_omp --scene "$SC" --threads 40 --repeats 5 --adaptive
+bench --renderer ours_mpi --scene "$SC" --ranks 2 --threads 20 --repeats 5
+bench --renderer ours_mpi --scene "$SC" --ranks 2 --threads 20 --repeats 5 --adaptive
+
+# ============================================================================
+# TIER 2 — novelty validation
+# ============================================================================
+echo "" | tee -a "$LOG"
+echo "=== TIER 2.1: Whitted strong scaling (1280×720) ===" | tee -a "$LOG"
+SHOW=scenes/whitted_showcase_1024.scene
+sed 's/^image 800 450$/image 1280 720/' scenes/whitted_showcase.scene > "$SHOW"
+for T in 1 2 4 8 16 20 40; do
+    bench --renderer ours_omp --scene "$SHOW" --threads $T --repeats 5
+    bench --renderer ours_omp --scene "$SHOW" --threads $T --repeats 5 --adaptive
+done
+
+echo "" | tee -a "$LOG"
+echo "=== TIER 2.2: Adaptive on CSG-heavy scenes ===" | tee -a "$LOG"
+for SCENE in scenes/csg_swiss_cheese.scene scenes/csg_lattice.scene scenes/csg_menger.scene; do
+    for T in 1 8 40; do
+        bench --renderer ours_omp --scene "$SCENE" --threads $T --repeats 5
+        bench --renderer ours_omp --scene "$SCENE" --threads $T --repeats 5 --adaptive
+    done
+done
+
+echo "" | tee -a "$LOG"
+echo "=== TIER 2.3: Hybrid MPI+OMP sweep (single + dual node) ===" | tee -a "$LOG"
+# Single node (default slot-fill keeps everything on node 0)
+for split in "1:40" "2:20" "4:10" "8:5" "40:1"; do
+    NP=${split%:*}; OT=${split#*:}
+    bench --renderer ours_mpi --scene "$SC" --ranks $NP --threads $OT --repeats 5
+done
+# Two nodes — must explicitly map to spread cross-node (slot-fill would pile all on node 0)
+for split in "2:40" "4:20" "8:10" "16:5"; do
+    NP=${split%:*}; OT=${split#*:}
+    PPN=$(( NP / 2 ))
+    bench --renderer ours_mpi --scene "$SC" --ranks $NP --threads $OT --repeats 5 \
+          --mpi-args "--map-by ppr:$PPN:node"
+done
+
+echo "" | tee -a "$LOG"
+echo "=== TIER 2.4: Weak scaling (image area ∝ N) ===" | tee -a "$LOG"
+declare -A IMG=( [1]=512 [4]=1024 [16]=2048 [64]=4096 )
+for N in 1 4 16 64; do
+    SZ=${IMG[$N]}
+    SCENE="/tmp/cornell_w_${SZ}.scene"
+    sed -E "s/^image 1024 1024$/image $SZ $SZ/; s/^spp 1024$/spp 256/" \
+        scenes/cornell_box_1024.scene > "$SCENE"
+    bench --renderer ours_omp --scene "$SCENE" --threads $N --repeats 3
+done
+
+echo "" | tee -a "$LOG"
+echo "=== TIER 2.5: CSG-only benchmark (pbrt cannot render these) ===" | tee -a "$LOG"
+for SCENE in scenes/csg_swiss_cheese.scene scenes/csg_lattice.scene scenes/csg_menger.scene; do
+    bench --renderer ours_omp --scene "$SCENE" --threads 40 --repeats 5
+    bench --renderer ours_omp --scene "$SCENE" --threads 40 --repeats 5 --adaptive
+done
+
+# ============================================================================
+# TIER 3 — same-hardware comparison
+# ============================================================================
+echo "" | tee -a "$LOG"
+echo "=== TIER 3.1: pbrt-v4 sweep (Cornell 1024², T=40) ===" | tee -a "$LOG"
+if command -v pbrt >/dev/null; then
+    for SPP in 4 16 64 256 1024; do
+        bench --renderer pbrt --scene scenes/cornell_box_1024_pbrt.pbrt --threads 40 --spp $SPP --repeats 3
+    done
+else
+    echo "[skip] pbrt not on PATH (deferred — see REPORT_CONTEXT.md)" | tee -a "$LOG"
+fi
+
+echo "" | tee -a "$LOG"
+echo "=== TIER 3.2: Mitsuba 3 scalar sweep (T=1) ===" | tee -a "$LOG"
+if command -v mitsuba >/dev/null; then
+    for SPP in 4 16 64 256 1024; do
+        bench --renderer mitsuba_scalar --scene scenes/cornell_box.xml --threads 1 --spp $SPP --repeats 3
+    done
+    echo "" | tee -a "$LOG"
+    echo "=== TIER 3.3: Mitsuba 3 LLVM sweep (T=40) ===" | tee -a "$LOG"
+    for SPP in 4 16 64 256 1024; do
+        bench --renderer mitsuba_llvm --scene scenes/cornell_box.xml --threads 40 --spp $SPP --repeats 3
+    done
+else
+    echo "[skip] mitsuba not on PATH (run cluster/setup_mitsuba.sh)" | tee -a "$LOG"
+fi
+
+echo "" | tee -a "$LOG"
+echo "=== TIER 3.4: Ours time-to-quality sweep (Cornell 1024², T=40) ===" | tee -a "$LOG"
+for SPP in 1 4 16 64 256 1024; do
+    SCENE="/tmp/cornell_1024_spp${SPP}.scene"
+    sed -E "s/^spp 1024$/spp $SPP/" scenes/cornell_box_1024.scene > "$SCENE"
+    bench --renderer ours_omp --scene "$SCENE" --threads 40 --repeats 3
+done
+
+# ============================================================================
+# Aggregate, then atomic copy /tmp -> results/
+# ============================================================================
+echo "" | tee -a "$LOG"
+echo "=== AGGREGATING (still on /tmp) ===" | tee -a "$LOG"
+python3 tools/aggregate.py "$CSV" -o "$SCRATCH/summary.csv" 2>>"$LOG" || true
+
+FINAL="results/${TS}"
+echo "" | tee -a "$LOG"
+echo "Copying $SCRATCH -> $FINAL ..." | tee -a "$LOG"
+mkdir -p "$FINAL" && cp -av "$SCRATCH"/. "$FINAL/" \
+    && echo "Final results: $FINAL" \
+    || echo "WARN: copy to $FINAL failed; data preserved in $SCRATCH on $(hostname)"
+
+ls -la "$FINAL" 2>/dev/null || ls -la "$SCRATCH"
+echo "Finished: $(date)"

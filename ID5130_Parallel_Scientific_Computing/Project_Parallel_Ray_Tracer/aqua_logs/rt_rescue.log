@@ -1,0 +1,32 @@
+[boot] pwd=/lfs/usrhome/ms/cs24s009/rt_paper host=cn168 date=Wed May  6 20:07:37 IST 2026
+[boot] aqua_env.sh sourced; DRJIT_LIBLLVM_PATH=/lfs/sware/anaconda3_2023/lib/libLLVM-11.so
+[boot] rt_env_check OK
+===========================================
+Rescue job  20260506_200737
+Nodes:  4
+Hosts:  cn168.ib0.cm.aqua.iitm.ac.in cn169.ib0.cm.aqua.iitm.ac.in cn170.ib0.cm.aqua.iitm.ac.in cn171.ib0.cm.aqua.iitm.ac.in 
+Started: Wed May  6 20:07:37 IST 2026
+===========================================
+
+=== LLVM probe ===
+llvm_ad_rgb OK
+
+=== TIER 1.1: Mitsuba 8192-SPP ground truth ===
+
+=== TIER 1.4: Pure MPI strong scaling (1 thread/rank) ===
+
+=== TIER 2.3: Hybrid MPI+OMP sweep (single + dual node) ===
+
+=== TIER 3.3: Mitsuba 3 LLVM sweep (Cornell 1024², T=40) ===
+
+=== AGGREGATING RESULTS ===
+wrote 24 rows to results/20260506_200737_rescue/summary.csv
+Finished: Wed May  6 20:09:02 IST 2026
+Results:  results/20260506_200737_rescue/
+total 2110
+drwxr-xr-x 2 cs24s009 ms   33280 May  6 20:09 .
+drwxr-xr-x 3 cs24s009 ms     512 May  6 20:07 ..
+-rw-r--r-- 1 cs24s009 ms 2106471 May  6 20:08 gt_mitsuba_8192spp.exr
+-rw-r--r-- 1 cs24s009 ms   50903 May  6 20:09 run.log
+-rw-r--r-- 1 cs24s009 ms    3318 May  6 20:09 summary.csv
+-rw-r--r-- 1 cs24s009 ms   13434 May  6 20:09 timings.csv
